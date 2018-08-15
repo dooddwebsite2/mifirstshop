@@ -54,7 +54,11 @@
 <!-- include loading  -->
 <?php require_once("loading.php");?>
 
-
+<script>
+$(document).ready(function(){
+$('body').find('img[src$="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]').remove();
+});
+</script>
 <!-- include modal dialog -->
 <?php
 foreach (glob("./include/modal/*.php") as $modalDialog)

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<?php include("./include/header.php");?>
+
+<body>
+
+    <?php include("./include/navbar.php");?>
+
+    <div id="all" class="ThaifontBangnam ContentTxt">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li>
+                            <?php include("./include/content/page_breadcrumb.php");?>
+                        </li>
+                        <li>บทความ</li>
+                    </ul>
+
+                </div>
+
+                <!-- *** LEFT COLUMN ***
+		     _________________________________________________________ -->
+
+                <div class="col-sm-12" id="blog-listing">
+
+
+                    <div class="box">
+
+                        <h1>Blog category name</h1>
+                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
+                            tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+                            egestas semper.</p>
+
+                    </div>
+
+                    <div class="post">
+                        <h2>
+                            <a href="post.html">Fashion now</a>
+                        </h2>
+                        <p class="author-category">By
+                            <a href="#">John Slim</a> in
+                            <a href="">Fashion and style</a>
+                        </p>
+                        <hr>
+                        <p class="date-comments">
+                            <a href="post.html">
+                                <i class="fa fa-calendar-o"></i> June 20, 2013</a>
+                            <a href="post.html">
+                                <i class="fa fa-comment-o"></i> 8 Comments</a>
+                        </p>
+                        <div class="image">
+                            <a href="post.html">
+                                <img src="img/blog2.jpg" class="img-responsive" alt="Example blog post alt">
+                            </a>
+                        </div>
+                        <p class="intro">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
+                            tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+                            egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        <p class="read-more">
+                            <a href="post.html" class="btn btn-primary">Continue reading</a>
+                        </p>
+                    </div>
+
+
+                    <div class="post">
+                        <h2>
+                            <a href="post.html">Who is who - example blog post</a>
+                        </h2>
+                        <p class="author-category">By
+                            <a href="#">John Slim</a> in
+                            <a href="">About Minimal</a>
+                        </p>
+                        <hr>
+                        <p class="date-comments">
+                            <a href="post.html">
+                                <i class="fa fa-calendar-o"></i> June 20, 2013</a>
+                            <a href="post.html">
+                                <i class="fa fa-comment-o"></i> 8 Comments</a>
+                        </p>
+                        <div class="image">
+                            <a href="post.html">
+                                <img src="img/blog.jpg" class="img-responsive" alt="Example blog post alt">
+                            </a>
+                        </div>
+                        <p class="intro">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
+                            tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+                            egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        <p class="read-more">
+                            <a href="post.html" class="btn btn-primary">Continue reading</a>
+                        </p>
+                    </div>
+
+                    <ul class="pager">
+                        <li class="previous">
+                            <a href="#">&larr; Older</a>
+                        </li>
+                        <li class="next disabled">
+                            <a href="#">Newer &rarr;</a>
+                        </li>
+                    </ul>
+
+
+
+                </div>
+                <!-- /.col-md-9 -->
+
+                <!-- *** LEFT COLUMN END *** -->
+
+
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+
+
+        <?php  include("./include/copyright.php");?>
+
+
+
+    </div>
+    <!-- /#all -->
+</body>
+
+</html>

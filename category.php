@@ -8,7 +8,7 @@
 
     <?php include("./include/navbar.php");?>
 
-    <div id="all" class="ThaifontBangnam">
+    <div id="all" class="ThaifontBangnam" >
 
         <div id="content">
             <div class="container">

@@ -48,7 +48,7 @@
                         SELECT * FROM content 
                         ) r1
                         
-                        LEFT JOIN content_comment ON r1.content_id = content_comment.content_id
+                        LEFT JOIN content_comment ON r1.content_id = content_comment.content_id  ORDER BY r1.content_create_date DESC
                         ";
                         $resultStr = sendQuery($QueryString);
                     
@@ -77,7 +77,7 @@
 
                             <div id="content_id_<?php echo $content_id;?>" class="post">
                                 <h2>
-                                    <a href="post.php?content_id=<?php echo $content_id;?>"><?php echo $content_name;?></a>
+                                    <a href="post.php?content_id=<?php echo $content_id;?>"><h2><?php echo $content_name;?></h2></a>
                                 </h2>
                                 <p class="author-category">By
                                     <!-- <a href="#">John Slim</a> in
@@ -91,14 +91,14 @@
                                     <a href="post.php?content_id=<?php echo $content_id;?>">
                                         <i class="fa fa-comment-o"></i> <?php echo $comment_count;?> Comments</a>
                                 </p>
-                                <div class="image">
+                                <div class="image" align="center">
                                     <a href="post.php?content_id=<?php echo $content_id;?>">
                                         <img src="img/blog/<?php echo $content_img1;?>" class="img-responsive" alt="<?php echo $content_name;?>">
                                     </a>
                                 </div>
-                                <p class="intro"><?php echo $content_preface;?></p>
+                                <p class="intro">&nbsp;&nbsp;<b><?php echo $content_preface;?></b></p>
                                 <p class="read-more">
-                                    <a href="post.php?content_id=<?php echo $content_id;?>" class="btn btn-primary">Continue reading</a>
+                                    <a href="post.php?content_id=<?php echo $content_id;?>" class="btn btn-primary ThaifontBangnam ContentTxt">อ่านต่อคลิ๊กเลย</a>
                                 </p>
                             </div>
 
@@ -110,11 +110,11 @@
                 </form>
 
                 <ul class="pager">
-                                <li class="previous">
-                                    <a href="#">&larr; Older</a>
+                                <li id="lipreviousId" class="previous">
+                                    <a id="previousId" href="#">&larr; Older</a>
                                 </li>
-                                <li class="next disabled">
-                                    <a href="#">Newer &rarr;</a>
+                                <li id="linextId" class="next">
+                                    <a id="nextId" href="#">Newer &rarr;</a>
                                 </li>
                             </ul>
                 <!-- /.col-md-9 -->
@@ -138,4 +138,49 @@
     <!-- /#all -->
 </body>
 
+<script>
+    pageSize = 2;
+    pagesCount = $(".post").length;
+    var currentPage = 1;
+    
+    /////////// PREPARE NAV ///////////////
+    var totalPages = Math.ceil(pagesCount / pageSize);
+    
+    //////////////////////////////////////
+
+    showPage = function() {
+        $(".post").hide().each(function(n) {
+            if (n >= pageSize * (currentPage - 1) && n < pageSize * currentPage)
+                $(this).show();
+        });
+
+        if(currentPage == 1){
+            $(".next").hide();
+        } else {
+            $(".next").show();
+        }
+
+        if(currentPage == totalPages){
+            $(".previous").hide();
+        } else {
+            $(".previous").show();
+        }
+    }
+    showPage();
+
+    $(".pager li.next").click(function() {
+        if($(this).next().is('.active')) return;
+       
+        currentPage = currentPage > 1 ? (currentPage-1) : 1;
+    
+        showPage();
+    });
+
+    $(".pager li.previous").click(function() {
+        if($(this).prev().is('.active')) return;   
+        currentPage = currentPage < totalPages ? (currentPage+1) : totalPages;
+        
+        showPage();
+    });
+</script>
 </html>

@@ -12,7 +12,6 @@ $message = isset($_POST['message']) ? $_POST['message'] : '';
 if($action == 'contact_request')
 {
     $mail             = new PHPMailer();
-
     $body = '
     <html>
     <head>
@@ -72,13 +71,12 @@ if($action == 'contact_request')
     $mail->MsgHTML($body);
     
     $address = "dooddwebsite2@gmail.com";
-    $mail->AddAddress($address, "MIFIRST SHOP);
+    $mail->AddAddress($address, "MIFIRST SHOP");
     
     if(!$mail->Send()) {
-      echo "Mailer Error: " . $mail->ErrorInfo;
+      echo 'Mailer Error:'.$mail->ErrorInfo;
     } else {
       echo "Message sent!";
     }
 }
-
 ?>

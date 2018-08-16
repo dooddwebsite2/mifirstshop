@@ -335,7 +335,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                                                 <a href="blog.php">Blog listing</a>
                                             </li>
                                             <li>
-                                                <a href="post.html">Blog Post</a>
+                                                <a href="post.php">Blog Post</a>
                                             </li>
                                             <li>
                                                 <a href="faq.html">FAQ</a>

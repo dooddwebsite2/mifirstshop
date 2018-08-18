@@ -55,7 +55,7 @@
                         <div class="col-sm-6">
                             <div class="post">
                                 <h2><a href="post.php?content_id=<?php echo $content_id;?>" alt="<?php echo $content_name;?>"><?php echo $content_name;?></a></h2>
-                                <p class="author-category">By <?php echo $content_create_by;?>
+                                <p class="author-category">By <?php echo $content_create_by;?> | <?php echo $content_create_date;?>
                                 </p>
                                 <hr>
                                 <p class="intro">&nbsp;&nbsp;<?php echo $content_preface;?></p>

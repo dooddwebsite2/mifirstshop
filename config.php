@@ -2,6 +2,10 @@
 /* db config */
 $img_blog = $_SERVER["DOCUMENT_ROOT"]."/img/blog/";
 
+/* set date */
+date_default_timezone_set("Asia/Bangkok");
+
+
 /* DB Connection */
 function db() {
     $dbhost = "localhost";
@@ -24,6 +28,13 @@ function sendQuery($str)
     $conn = db();
     $results = mysqli_query($conn,$str);
     return $results;
+}
+
+function executeQuery($str)
+{
+    $connf = db();
+    mysqli_query($connf,$str);
+  
 }
 /* END db config */
 

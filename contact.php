@@ -98,9 +98,14 @@
                         </div> -->
 
 
-                        <img id="mappic" src="img/main-slider1.jpg" alt="แผนที่" class="img-responsive">
+                        <!-- <img id="mappic" src="img/main-slider1.jpg" alt="แผนที่" class="img-responsive"> -->
 
+                        <!-- <iframe id="map" width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCZEVlFGU3e-IavlW5izHVeGY3dEpfZchE&q=ladprao+110,ladprao+110" >
+                        </iframe> -->
 
+                        <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=13.7981058,100.5806117&amp;key=AIzaSyCZEVlFGU3e-IavlW5izHVeGY3dEpfZchE"></iframe>
+
+                     
                         <hr>
 
                         <h2>แบบฟอร์มการติดต่อ</h2>
@@ -182,7 +187,7 @@
 
     </div>
 
-    
+
 </body>
 
 <script>
@@ -316,29 +321,44 @@
 <script>
     $(document).ready(function () {
 
-        imageClick();
+        // imageClick();
+       // var width_div = $(".box").width();
+       // initialize(width_div);
+
     });
 
-    function imageClick() {
+    // function initialize(width_div) {
+    //     var heightSize = width_div > 878 ? 3 : 4;
+    //     var height_div = $(".box").height() / heightSize;
+    //     $("#map").width(width_div);
+    //     $("#map").height(height_div);
+    // }
 
-        var modal = document.getElementById('myModal');
+    // $(window).resize(function () {
+    //     var width_div = $(".box").width();
+    //     initialize(width_div);
+    // });
 
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = document.getElementById('mappic');
-        var modalImg = document.getElementById("img01");
-        var captionText = document.getElementById("caption");
-        img.onclick = function () {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
-        }
+    // function imageClick() {
 
-    }
+    //     var modal = document.getElementById('myModal');
 
-    function closes() {
+    //     // Get the image and insert it inside the modal - use its "alt" text as a caption
+    //     var img = document.getElementById('mappic');
+    //     var modalImg = document.getElementById("img01");
+    //     var captionText = document.getElementById("caption");
+    //     img.onclick = function () {
+    //         modal.style.display = "block";
+    //         modalImg.src = this.src;
+    //         captionText.innerHTML = this.alt;
+    //     }
 
-        $('#myModal').css('display', 'none');
-    }
+    // }
+
+    // function closes() {
+
+    //     $('#myModal').css('display', 'none');
+    // }
 </script>
 
 

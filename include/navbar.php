@@ -284,7 +284,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                                                 <a href="category-full.html">Category - full width</a>
                                             </li>
                                             <li>
-                                                <a href="detail.html">Product detail</a>
+                                                <a href="detail.php">Product detail</a>
                                             </li>
                                         </ul>
                                     </div>

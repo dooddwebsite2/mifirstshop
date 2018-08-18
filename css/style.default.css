@@ -426,6 +426,7 @@ h1 {
   font-size: 12px;
   color: #999999;
 }
+
 #content .panel.sidebar-menu ul.nav ul li a:hover,
 #content .panel.sidebar-menu ul.nav ul li a:focus {
   text-decoration: none;
@@ -852,6 +853,8 @@ h1 {
 #content #blog-post .comment.last {
   margin-bottom: 0;
 }
+
+
 #content #blog-post #comments:before,
 #content #blog-post #comment-form:before,
 #content #blog-post #comments:after,

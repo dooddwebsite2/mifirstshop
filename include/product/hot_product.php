@@ -17,22 +17,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product1.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product1_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product1.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">Fur coat with very but very very long name</a></h3>
+                    <h3><a href="detail.php">Fur coat with very but very very long name</a></h3>
                     <p class="price">$143.00</p>
                 </div>
                 <!-- /.text -->
@@ -45,22 +45,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product2_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product2.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">White Blouse Armani</a></h3>
+                    <h3><a href="detail.php">White Blouse Armani</a></h3>
                     <p class="price"><del>$280</del> $143.00</p>
                 </div>
                 <!-- /.text -->
@@ -91,22 +91,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product3.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product3_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product3.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">Black Blouse Versace</a></h3>
+                    <h3><a href="detail.php">Black Blouse Versace</a></h3>
                     <p class="price">$143.00</p>
                 </div>
                 <!-- /.text -->
@@ -119,22 +119,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product3.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product3_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product3.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">Black Blouse Versace</a></h3>
+                    <h3><a href="detail.php">Black Blouse Versace</a></h3>
                     <p class="price">$143.00</p>
                 </div>
                 <!-- /.text -->
@@ -147,22 +147,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product2_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product2.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">White Blouse Versace</a></h3>
+                    <h3><a href="detail.php">White Blouse Versace</a></h3>
                     <p class="price">$143.00</p>
                 </div>
                 <!-- /.text -->
@@ -181,22 +181,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product1.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product1_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product1.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">Fur coat</a></h3>
+                    <h3><a href="detail.php">Fur coat</a></h3>
                     <p class="price">$143.00</p>
                 </div>
                 <!-- /.text -->
@@ -217,22 +217,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product2_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product2.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">White Blouse Armani</a></h3>
+                    <h3><a href="detail.php">White Blouse Armani</a></h3>
                     <p class="price"><del>$280</del> $143.00</p>
                 </div>
                 <!-- /.text -->
@@ -263,22 +263,22 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product3.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="back">
-                            <a href="detail.html">
+                            <a href="detail.php">
                                 <img src="img/product3_2.jpg" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a href="detail.html" class="invisible">
+                <a href="detail.php" class="invisible">
                     <img src="img/product3.jpg" alt="" class="img-responsive">
                 </a>
                 <div class="text">
-                    <h3><a href="detail.html">Black Blouse Versace</a></h3>
+                    <h3><a href="detail.php">Black Blouse Versace</a></h3>
                     <p class="price">$143.00</p>
                 </div>
                 <!-- /.text -->

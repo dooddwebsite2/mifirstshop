@@ -11,7 +11,13 @@
 
     <?php include("./include/navbar.php");?>
 
+    <!-- <style>
+        .divSplit2Side_Row {
+            margin-left: 0px;
+            margin-right: 0px;
 
+        }
+    </style> -->
     <div id="all">
 
         <div id="content">
@@ -36,6 +42,20 @@
                     <!-- /#main-slider -->
                 </div>
             </div>
+            <!-- <div class="container">
+            <div class="col-md-12 ">
+                <div class="box row divSplit2Side_Row">
+                    <div class=" col-md-5">
+555     
+                    </div>
+                    <div class=" col-md-7">
+                            5
+                    </div>
+
+                </div>
+            </div>
+            </div> -->
+            
 
              <?php  include("./include/advantages_homepage.php");?>
 

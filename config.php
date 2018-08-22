@@ -40,6 +40,7 @@ function sendQuery($str)
     return $results;
 }
 
+
 function executeQuery($str)
 {
     $connf = db();
@@ -155,8 +156,10 @@ function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_
         $prodArrays[$rows['product_id']]['product_shopee_url'] =  empty($rows['product_shopee_url'])? '' :$rows['product_shopee_url'];
         $prodArrays[$rows['product_id']]['parent_name_th'] =  empty($rows['parent_name_th'])? '' :$rows['parent_name_th'];
         $prodArrays[$rows['product_id']]['is_for_all'] =  empty($rows['is_for_all'])? '' :$rows['is_for_all'];
+        
         $sub_cate_id = empty($rows['sub_cate_id']) ? 0 : $rows['sub_cate_id'];
         if($sub_cate_id != 0){
+            $prodArrays[$rows['product_id']]['sub_cate_name'][] =  empty($rows['sub_cate_name_th'])? '' :$rows['sub_cate_name_th'];
             $prodArrays[$rows['product_id']]['child'][$sub_cate_id]['sub_cate_id'] = empty($sub_cate_id)? '' : $sub_cate_id;
         
             $prodArrays[$rows['product_id']]['child'][$sub_cate_id]['sub_cate_name_th'] = empty($rows['sub_cate_name_th'])? '' :$rows['sub_cate_name_th'];
@@ -178,6 +181,7 @@ function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_
 function deCodeMD5($str)
 {
     $navBarArray = array("6a992d5529f459a44fee58c733255e86"=>"index",
+    "126ac9f6149081eb0e97c2e939eaad52"=>"blog",
     "d2fc17cc2feffa1de5217a3fd29e91e8"=>"men",
     "273b9ae535de53399c86a9b83148a8ed"=>"female",
     "478669c7fa549970e36eac591cdca62e"=>"questions",
@@ -194,6 +198,54 @@ function deCodeMD5($str)
 
 
 
+/* LOGIN FUNCTION */
+function LoginFunc($user_id,$user_name,$user_pwd) {
+    $conditionProd = ($user_id == 0 ) || empty($user_id) ? '' : "AND auth_account.id= {$user_id} ";
+    $conditionProd .= empty($user_name)  ? '' : "AND auth_account.u_name = '{$user_name}' ";
+    $conditionProd .= empty($user_pwd)  ? '' : " AND auth_account.u_pass = md5('{$user_pwd}') ";
+    $QueryString = "SELECT * FROM auth_account 
+    JOIN auth_role ON auth_account.role_id = auth_role.role_id  WHERE u_active = 1 
+    {$conditionProd}
+    ";
+    // echo $QueryString;
+    // exit;
+    $profileArrays = array();
+    $resultStr = sendQuery($QueryString);
+    while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
+        $profileArrays[$rows['id']]['id'] = empty($rows['id'])?'':$rows['id'];       
+        $profileArrays[$rows['id']]['hashKeys'] = empty($rows['id'])?'':md5($rows['id']);                       
+        $profileArrays[$rows['id']]['u_name'] = empty($rows['u_name'])?'-':$rows['u_name'];
+        $profileArrays[$rows['id']]['u_pass'] =  empty($rows['u_pass'])?'-':$rows['u_pass'];
+        $profileArrays[$rows['id']]['first_login'] =  empty($rows['first_login'])?'':$rows['first_login'];
+        $profileArrays[$rows['id']]['last_login'] =  empty($rows['last_login'])?'':$rows['last_login'];
+        $profileArrays[$rows['id']]['count_page'] =  empty($rows['count_page'])?'':$rows['count_page'];
+        $profileArrays[$rows['id']]['count_login'] =  empty($rows['count_login'])?'':$rows['count_login'];
+        $profileArrays[$rows['id']]['user_description'] =  empty($rows['user_description'])?'':$rows['user_description'];
+        $profileArrays[$rows['id']]['email'] =  empty($rows['email'])?'':$rows['email'];
+        $profileArrays[$rows['id']]['creator'] =  empty($rows['creator'])?'':$rows['creator'];
+        $profileArrays[$rows['id']]['created'] =  empty($rows['created'])?'':$rows['created'];
+        $profileArrays[$rows['id']]['modified'] =  empty($rows['modified'])?'':$rows['modified'];
+        $profileArrays[$rows['id']]['first_name'] =  empty($rows['first_name'])?'':$rows['first_name'];
+        $profileArrays[$rows['id']]['last_name'] =  empty($rows['last_name'])?'':$rows['last_name'];
+        $profileArrays[$rows['id']]['role_id'] =  empty($rows['role_id'])?'':$rows['role_id'];
+    
+    
+    } 
+    return $profileArrays;
+}
+/* END LOGIN FUNCTION */
+
+/* DECODE HASH MD5 LOGIN PARAMETERS */
+
+
+/* END DECODE HASH MD5  PARAMETERS  */
+function deCodeMD5_onetable($hashKeys,$columns,$table){
+    $QueryString = "SELECT {$columns} FROM {$table} WHERE md5({$columns}) = '{$hashKeys}' LIMIT 1";
+    $resultStr = sendQuery($QueryString);
+    $row= mysqli_fetch_assoc($resultStr);
+    return empty($row[$columns]) ? '' : $row[$columns];
+
+}
 
 /* FACEBOOK API */
 function sendInboxMessage() {

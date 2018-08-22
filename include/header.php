@@ -1,3 +1,26 @@
+
+<!-- include center config -->
+<?php require_once("timezones.php");?>
+<?php
+session_start();
+if(isset($_GET['profileUserID']))
+{ 
+    $_SESSION["user_id"] = $_GET['profileUserID'];
+  
+}
+$now = time(); // Checking the time now when home page starts.
+// echo 'time now '.date("Y-m-d H:i:s",$now);
+// print_r($_SESSION);
+// echo 'expire  '.date("Y-m-d H:i:s",$_SESSION["expire"]);
+if(isset($_SESSION["expire"])){
+    if ($now > $_SESSION["expire"]) {
+        session_destroy();
+        header('Location: index.php?activeNav=6a992d5529f459a44fee58c733255e86');
+       
+    }
+}
+
+?>
 <head>
 
     <meta charset="utf-8">
@@ -33,6 +56,12 @@
 
     <link rel="shortcut icon" href="favicon.png">
 
+    <!-- DATATABLE JQUERY PLUGIN -->
+    <link rel="stylesheet" type="text/css" href="css/jquery-datatable.min.css">
+  
+
+
+
         <!-- *** SCRIPTS TO INCLUDE ***
  _________________________________________________________ -->
  <script src="js/jquery-1.11.0.min.js"></script>
@@ -44,6 +73,8 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/front.js"></script>
     <script src="js/bootstrapValidator.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/่jquery-datatable.min.js"></script>
+
 
 </head>
 
@@ -56,7 +87,8 @@
 
 <script>
 $(document).ready(function(){
-$('body').find('img[src$="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]').remove();
+    $('body').find('img[src$="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]').remove();
+   
 });
 </script>
 <!-- include modal dialog -->
@@ -65,8 +97,5 @@ foreach (glob("./include/modal/*.php") as $modalDialog)
 {
     require_once $modalDialog;
 }
-
-
-
 
 ?>

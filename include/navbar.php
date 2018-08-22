@@ -1,3 +1,6 @@
+
+<?php include("./include/topbar.php");?>
+
 <!-- *** NAVBAR ***
  _________________________________________________________ -->
 <?php
@@ -11,7 +14,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
     <div class="container">
         <div class="navbar-header">
 
-            <a class="navbar-brand home" href="index.php" data-animate-hover="bounce">
+            <a class="navbar-brand home" href="index.php?activeNav=6a992d5529f459a44fee58c733255e86" data-animate-hover="bounce">
                 <img src="img/logo.png" alt="Obaju logo" class="hidden-xs">
                 <img src="img/logo-small.png" alt="Obaju logo" class="visible-xs">
                 <span class="sr-only">Obaju - go to homepage</span>
@@ -56,7 +59,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                 </li>
 
                 
-                <li id="men" class="<?php if( $navActive == 'men'){echo 'active';}?> dropdown yamm-fw">
+                <!-- <li id="men" class="<?php if( $navActive == 'men'){echo 'active';}?> dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle ThaifontBangnam navBarHeader" data-toggle="dropdown" data-hover="dropdown" data-delay="200">ผู้ชาย
                         <b class="caret"></b>
                     </a>
@@ -149,7 +152,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.yamm-content -->
+                     
                         </li>
                     </ul>
                 </li>
@@ -245,11 +248,13 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.yamm-content -->
+                           
                         </li>
                     </ul>
+                </li> -->
+                <li id="faq" class="<?php if( $navActive == 'blog'){echo 'active';}?> ThaifontBangnam navBarHeader">
+                    <a href="blog.php?activeNav=<?php echo md5('blog');?>">บทความ</a>
                 </li>
-
                 <li id="faq" class="<?php if( $navActive == 'questions'){echo 'active';}?> ThaifontBangnam navBarHeader">
                     <a href="questions.php?activeNav=<?php echo md5('questions');?>">คำถามที่พบบ่อย</a>
                 </li>
@@ -260,6 +265,21 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                     <a href="contact.php?activeNav=<?php echo md5('contact');?>">ติดต่อเรา</a>
                 </li>
 
+                <!-- <div class="container">
+              
+                    <div class="col-md-6" data-animate="fadeInDown">
+                        <ul class="menu">
+                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                            </li>
+                            <li><a href="register.php">Register</a>
+                            </li>
+                            <li><a href="contact.php">Contact</a>
+                            </li>
+                            <li><a href="#">Recently viewed</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
                 <!-- <li class="dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle ThaifontBangnam navBarHeader" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Template
                         <b class="caret"></b>
@@ -304,7 +324,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                                                 <a href="customer-wishlist.html">Wishlist</a>
                                             </li>
                                             <li>
-                                                <a href="customer-account.html">Customer account / change password</a>
+                                                <a href="customer-account.php">Customer account / change password</a>
                                             </li>
                                         </ul>
                                     </div>

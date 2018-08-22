@@ -171,7 +171,7 @@
                         if($content_count != 0) {
                         ?>
                                         <h3>
-                                            <b>
+                                            <b id="tagB_commentCount">
                                                 <?php echo $content_count;?> Comment</b>
                                         </h3>
                                         <?php } ?>
@@ -226,14 +226,14 @@
 
                             <ul class="pager">
                                 <li id="lipreviousId" class="previous">
-                                    <a id="previousId" href="#">&larr; Older</a>
+                                    <a id="previousId" href="#tagB_commentCount">&larr; Older</a>
                                 </li>
                                 <li id="linextId" class="next">
-                                    <a id="nextId" href="#">Newer &rarr;</a>
+                                    <a id="nextId" href="#tagB_commentCount">Newer &rarr;</a>
                                 </li>
                             </ul>
                             <!-- /#comments -->
-                            
+                            <hr id="hrshow" style="display: none;">
 
                             <div id="comment-form" data-animate="fadeInUp">
 
@@ -350,14 +350,19 @@
         pageSize = 2;
         pagesCount = $(".comment").length;
         var currentPage = 1;
-
+        $(function () {
+            if (pagesCount == 0) {
+                $('.pager').hide();
+                $('#hrshow').show();
+            }
+        });
         /////////// PREPARE NAV ///////////////
         var totalPages = Math.ceil(pagesCount / pageSize);
-        
+
         //////////////////////////////////////
 
         showPage = function () {
-            
+
             $(".comment").hide().each(function (n) {
                 if (n >= pageSize * (currentPage - 1) && n < pageSize * currentPage)
                     $(this).show();
@@ -374,20 +379,23 @@
             } else {
                 $(".previous").show();
             }
+
+          // $('#tagB_commentCount').scrollTop(0);
+            
         }
         showPage();
 
-        $(".pager li.next").click(function (e) {
-            e.preventDefault();
+        $(".pager li.next").click(function () {
+            // e.preventDefault();
             if ($(this).next().is('.active')) return;
-
+            
             currentPage = currentPage > 1 ? (currentPage - 1) : 1;
 
             showPage();
         });
 
-        $(".pager li.previous").click(function (e) {
-            e.preventDefault();
+        $(".pager li.previous").click(function () {
+            // e.preventDefault();
             if ($(this).prev().is('.active')) return;
             currentPage = currentPage < totalPages ? (currentPage + 1) : totalPages;
 

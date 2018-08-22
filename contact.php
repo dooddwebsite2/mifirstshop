@@ -325,6 +325,8 @@
        // var width_div = $(".box").width();
        // initialize(width_div);
 
+  
+
     });
 
     // function initialize(width_div) {

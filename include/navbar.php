@@ -292,7 +292,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                                         <h5 class="ThaifontBangnam headerTxt">User</h5>
                                         <ul class="ThaifontBangnam headerTxt">
                                             <li>
-                                                <a href="register.html">Register / login</a>
+                                                <a href="register.php">Register / login</a>
                                             </li>
                                             <li>
                                                 <a href="customer-orders.html">Orders history</a>

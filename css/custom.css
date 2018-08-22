@@ -60,3 +60,13 @@
 img.loading {
     box-shadow: 0px 0px 5px #fff;
 }
+
+
+li.liActiveClass > a {
+    background-color: #4fbfa8 !important;
+    color: #ffffff !important;
+}
+/* fixed other brower*/
+a.liActiveClassA {
+    color: #ffffff !important;
+}

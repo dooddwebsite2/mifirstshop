@@ -51,14 +51,14 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                <button type="button" class="btn btn-primary" onclick="sendRequest()">ยืนยัน</button>
+                <button type="button" class="btn btn-primary" onclick="sendRequestContact()">ยืนยัน</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function sendRequest() {
+    function sendRequestContact() {
 
         var firstname = $('#firstname').val();
         var lastname = $('#lastname').val();

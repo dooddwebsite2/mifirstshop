@@ -15,6 +15,48 @@ $img_cate = "img/category/";
 /* set date */
 date_default_timezone_set("Asia/Bangkok");
 
+/* PRODUCT DIRECTORY */
+ 
+function returnPath($str,$session_id,$product_id,$type){
+    $ds = DIRECTORY_SEPARATOR; 
+    $date_now = date("Y-m-d H:i:s");
+    $date_time = new DateTime($date_now);
+    $time_stamp = $date_time->getTimestamp();
+    $session_id = empty($session_id) ? 0 : $session_id;
+    $product_id = empty($product_id) ? 0 : $product_id;
+    switch ($str) {
+        case "tmp_img":
+            $str = 'tmp'.$ds.$session_id.'_';
+            $str .= $type == 'only_id' ? '' :$time_stamp.$ds;
+        break;
+        case "product":
+            $str = 'img'.$ds.'product'.$ds.$product_id.$ds;
+        break;
+        default:
+            echo "errors";
+    }
+
+    if (!file_exists(dirname( __FILE__ ).$ds.$str) && $type != 'only_id') {
+        mkdir(dirname( __FILE__ ).$ds.$str, 0777, true);
+    }
+    return dirname( __FILE__ ).$ds.$str;
+}
+/* GET ONLY TIMESTAMP */
+function getTimeStamp($timp_stamp,$date_now){
+    
+    $date_time = new DateTime($date_now);
+    $time_stamp = $date_time->getTimestamp();
+    return $time_stamp;
+}
+/* PRODUCT TYPE มือหนึ่ง : มือสอง*/
+function getProductType(){
+    $prodType[1]['th'] = "มือหนึ่ง";
+    $prodType[1]['en'] = "first hand";
+
+    $prodType[2]['th'] = "มือสอง";
+    $prodType[2]['en'] = "second hand";
+    return $prodType;
+}
 
 /* DB Connection */
 function db() {
@@ -61,6 +103,7 @@ function getCategory() {
         $cateArrays[$rowCount]['cate_name_th'] = empty($rows['cate_name_th'])?'-':$rows['cate_name_th'];
         $cateArrays[$rowCount]['cate_name_en'] =  empty($rows['cate_name_en'])?'-':$rows['cate_name_en'];
         $cateArrays[$rowCount]['cate_img_1'] =  empty($rows['cate_img_1'])?'-':$rows['cate_img_1'];
+        $cateArrays[$rowCount]['cate_img_2'] =  empty($rows['cate_img_2'])?'-':$rows['cate_img_2'];
         // $cateArrays[$rowCount]['cate_img_1'] =  '';
     } 
     return $cateArrays;
@@ -96,6 +139,8 @@ function getSubCategory($cate_id,$cate_orderby,$cate_limit)
             $cateArrays[$rows['parent_id']]['child'][$sub_cate_id] ['sub_cate_name_th'] = empty($rows['sub_cate_name_th'])?'':$rows['sub_cate_name_th'];
             $cateArrays[$rows['parent_id']]['child'][$sub_cate_id] ['sub_cate_name_en'] =  empty($rows['sub_cate_name_en'])?'':$rows['sub_cate_name_en'];
             $cateArrays[$rows['parent_id']]['child'][$sub_cate_id] ['sub_cate_img_1'] =  empty($rows['sub_cate_img_1'])?'':$rows['sub_cate_img_1'];
+            $cateArrays[$rows['parent_id']]['child'][$sub_cate_id] ['sub_cate_id'] =  empty($rows['sub_cate_id'])?'':$rows['sub_cate_id'];
+            $cateArrays[$rows['parent_id']]['child'][$sub_cate_id] ['parent_id'] =  empty($rows['parent_id'])?'':$rows['parent_id'];
         }
         // $cateArrays[$rowCount]['cate_img_1'] =  '';
     } 
@@ -106,10 +151,12 @@ function getSubCategory($cate_id,$cate_orderby,$cate_limit)
 
 
 
-/* GET PRODUCT */
-function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_limit,$typeofSex){
+/* MAIN GET PRODUCT จะเอาความสัมพันธ์ที่ผูกกับ product มาด้วย */
+function getProduct_withCategory($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_limit,$typeofSex,$session_id){
 
-    $conditionProd = ($product_id == 0 ) ? '' : "WHERE product.product_id = {$product_id} ";
+    $conditionProd = " WHERE 1=1 ";
+    $conditionProd .= ($product_id == 0 ) ? '' : " AND product.product_id = {$product_id} ";
+    $conditionProd .= empty($session_id) ? '' : " AND product.create_by = {$session_id} ";
     $conditionProd .= empty($product_orderby) ? '' : " ORDER BY {$product_orderby} ";
     $conditionProd .= empty($product_limit) ? '' : " LIMIT {$product_limit} ";
     $conditionCate =  empty($cate_id) ? '' : " WHERE r2.cate_id = {$cate_id} ";
@@ -128,8 +175,7 @@ function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_
         JOIN sub_category AS s ON FIND_IN_SET(s.sub_cate_id,r1.cate_id_multi)
         )r2  {$conditionCate} 
         ";
-        // echo $QueryString;
-        // exit;
+     
     $prodArrays = array();
     $resultStr = sendQuery($QueryString);
     if (empty($resultStr)) {
@@ -156,6 +202,18 @@ function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_
         $prodArrays[$rows['product_id']]['product_shopee_url'] =  empty($rows['product_shopee_url'])? '' :$rows['product_shopee_url'];
         $prodArrays[$rows['product_id']]['parent_name_th'] =  empty($rows['parent_name_th'])? '' :$rows['parent_name_th'];
         $prodArrays[$rows['product_id']]['is_for_all'] =  empty($rows['is_for_all'])? '' :$rows['is_for_all'];
+
+        $prodArrays[$rows['product_id']]['product_id_ref'] =  empty($rows['product_id_ref'])? '' :$rows['product_id_ref'];
+        $prodArrays[$rows['product_id']]['product_logistic_weight'] =  empty($rows['product_logistic_weight'])? '' :$rows['product_logistic_weight'];
+        $prodArrays[$rows['product_id']]['product_logistic_size_1'] =  empty($rows['product_logistic_size_1'])? '' :$rows['product_logistic_size_1'];
+        $prodArrays[$rows['product_id']]['product_logistic_size_2'] =  empty($rows['product_logistic_size_2'])? '' :$rows['product_logistic_size_2'];
+        $prodArrays[$rows['product_id']]['product_logistic_size_3'] =  empty($rows['product_logistic_size_3'])? '' :$rows['product_logistic_size_3'];
+        $prodArrays[$rows['product_id']]['product_logistic_amount'] =  empty($rows['product_logistic_amount'])? '' :$rows['product_logistic_amount'];
+        $prodArrays[$rows['product_id']]['product_logistic_send'] =  empty($rows['product_logistic_send'])? '' :$rows['product_logistic_send'];
+        $prodArrays[$rows['product_id']]['product_stock'] =  empty($rows['product_stock'])? '' :$rows['product_stock'];
+       
+        $prodArrays[$rows['product_id']]['product_type'] =  empty($rows['product_type'])? '' :$rows['product_type'];
+       
         
         $sub_cate_id = empty($rows['sub_cate_id']) ? 0 : $rows['sub_cate_id'];
         if($sub_cate_id != 0){
@@ -170,6 +228,7 @@ function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_
             $prodArrays[$rows['product_id']]['child'][$sub_cate_id]['sub_cate_desc'] = empty($rows['sub_cate_desc'])? '' : $rows['sub_cate_desc'];
         
         }
+        
        
     } 
     return $prodArrays;
@@ -178,6 +237,61 @@ function getProduct($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_
 }
 /* END GET PRODUCT */
 
+/* GET PRODUCT เอาแต่ฟิลด์ทั้งหมดที่อยู่ใน product มาไม่สนใจสินค้าที่ผูกใน Category และ Subcate มาแสดงทั้งหมด */
+function getProduct($product_id,$product_orderby,$product_limit,$typeofSex,$session_id){
+    
+    $conditionProd = " WHERE 1=1 ";
+    $conditionProd .= ($product_id == 0 ) ? '' : " AND product.product_id = {$product_id} ";
+    $conditionProd .= empty($session_id) ? '' : " AND product.create_by = {$session_id} ";
+    $conditionProd .= empty($product_orderby) ? '' : " ORDER BY {$product_orderby} ";
+    $conditionProd .= empty($product_limit) ? '' : " LIMIT {$product_limit} ";
+ 
+    $QueryString = "SELECT * FROM product {$conditionProd}";
+     
+    $prodArrays = array();
+    $resultStr = sendQuery($QueryString);
+    if (empty($resultStr)) {
+        return $prodArrays;
+    }
+    while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
+        $prodArrays[$rows['product_id']]['product_id'] =  empty($rows['product_id'])?'-':$rows['product_id'];
+        $prodArrays[$rows['product_id']]['product_name'] =  empty($rows['product_name'])?'-':$rows['product_name'];
+        $prodArrays[$rows['product_id']]['is_for_men'] =  empty($rows['is_for_men'])?'':$rows['is_for_men'];
+        $prodArrays[$rows['product_id']]['is_for_female'] =  empty($rows['is_for_female'])?'':$rows['is_for_female'];
+        $prodArrays[$rows['product_id']]['is_for_kid'] =  empty($rows['is_for_kid'])?'':$rows['is_for_kid'];
+        $prodArrays[$rows['product_id']]['product_create_date'] =  empty($rows['product_create_date'])?'':$rows['product_create_date'];
+        $prodArrays[$rows['product_id']]['product_active'] =  empty($rows['product_active'])?'':$rows['product_active'];
+        $prodArrays[$rows['product_id']]['product_img1'] =  empty($rows['product_img1'])?'':$rows['product_img1'];
+        $prodArrays[$rows['product_id']]['product_img2'] =  empty($rows['product_img2'])?'':$rows['product_img2'];
+        $prodArrays[$rows['product_id']]['product_img3'] =  empty($rows['product_img3'])?'':$rows['product_img3'];
+        $prodArrays[$rows['product_id']]['product_img4'] =  empty($rows['product_img4'])?'':$rows['product_img4'];
+        $prodArrays[$rows['product_id']]['product_img5'] =  empty($rows['product_img5'])?'':$rows['product_img5'];
+        $prodArrays[$rows['product_id']]['product_price'] =  empty($rows['product_price'])? 0 :$rows['product_price'];
+        $prodArrays[$rows['product_id']]['product_detail'] =  empty($rows['product_detail'])? '' :$rows['product_detail'];
+        $prodArrays[$rows['product_id']]['product_meterial'] =  empty($rows['product_meterial'])? '' :$rows['product_meterial'];
+        $prodArrays[$rows['product_id']]['product_size'] =  empty($rows['product_size'])? '' :$rows['product_size'];
+        $prodArrays[$rows['product_id']]['product_discount'] =  empty($rows['product_discount'])? '' :$rows['product_discount'];
+        $prodArrays[$rows['product_id']]['product_shopee_url'] =  empty($rows['product_shopee_url'])? '' :$rows['product_shopee_url'];
+        $prodArrays[$rows['product_id']]['parent_name_th'] =  empty($rows['parent_name_th'])? '' :$rows['parent_name_th'];
+        $prodArrays[$rows['product_id']]['is_for_all'] =  empty($rows['is_for_all'])? '' :$rows['is_for_all'];
+
+        $prodArrays[$rows['product_id']]['product_id_ref'] =  empty($rows['product_id_ref'])? '' :$rows['product_id_ref'];
+        $prodArrays[$rows['product_id']]['product_logistic_weight'] =  empty($rows['product_logistic_weight'])? '' :$rows['product_logistic_weight'];
+        $prodArrays[$rows['product_id']]['product_logistic_size_1'] =  empty($rows['product_logistic_size_1'])? '' :$rows['product_logistic_size_1'];
+        $prodArrays[$rows['product_id']]['product_logistic_size_2'] =  empty($rows['product_logistic_size_2'])? '' :$rows['product_logistic_size_2'];
+        $prodArrays[$rows['product_id']]['product_logistic_size_3'] =  empty($rows['product_logistic_size_3'])? '' :$rows['product_logistic_size_3'];
+        $prodArrays[$rows['product_id']]['product_logistic_amount'] =  empty($rows['product_logistic_amount'])? '' :$rows['product_logistic_amount'];
+        $prodArrays[$rows['product_id']]['product_logistic_send'] =  empty($rows['product_logistic_send'])? '' :$rows['product_logistic_send'];
+        $prodArrays[$rows['product_id']]['product_stock'] =  empty($rows['product_stock'])? '' :$rows['product_stock'];
+       
+        $prodArrays[$rows['product_id']]['product_type'] =  empty($rows['product_type'])? '' :$rows['product_type'];
+       
+        
+      
+       
+    } 
+    return $prodArrays;
+}
 function deCodeMD5($str)
 {
     $navBarArray = array("6a992d5529f459a44fee58c733255e86"=>"index",

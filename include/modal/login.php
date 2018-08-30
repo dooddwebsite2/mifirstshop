@@ -16,7 +16,7 @@
                         </div>
 
                         <p class="text-center">
-                            <button class="btn btn-primary" onclick="sendRequest()"><i class="fa fa-sign-in"></i> เข้าสู่ระบบ</button>
+                            <span class="btn btn-primary" id="sendRequestLogin" onclick="sendRequest()"><i class="fa fa-sign-in"></i> เข้าสู่ระบบ</span>
                         </p>
 
                     </form>
@@ -31,8 +31,13 @@
 
 
     <script>
-    function sendRequest() {
+    $("#login-modal").on('keyup', function (e) {
+    if (e.keyCode == 13) {
+             sendRequest();
+        }
+    });
 
+    function sendRequest() {
         var user_modal = $('#user-modal').val();
         var password_modal = $('#password-modal').val();   
         $('#loadingDiv').show();
@@ -46,6 +51,7 @@
                 action: "login_request"
             },
             success: function (data, status, xhr) {
+            
                 $('#loadingDiv').hide();
                 var hashKeys;
                 var jsonData = JSON.parse(xhr.responseText);
@@ -59,7 +65,7 @@
                 {
                     hashKeys = jsonData.profiles[k].hashKeys;
                 }
-                window.location.href = "/mifirstshop/index.php?activeNav=6a992d5529f459a44fee58c733255e86" + "&profileUserID=" + hashKeys;
+                window.location.href = "index.php?activeNav=6a992d5529f459a44fee58c733255e86" + "&profileUserID=" + hashKeys;
                 $('#login-modal').modal('toggle');
                 
                

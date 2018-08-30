@@ -11,10 +11,16 @@
 
 <?php
 
-    $user_id;
-    if(isset($_SESSION['user_id'])) { $user_id = $_SESSION['user_id'];}
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
+    if(empty($user_id)){
+        echo '<script>window.location.href = "index.php?activeNav=6a992d5529f459a44fee58c733255e86";alert("กรุณาเข้าสู่ระบบ");</script>';
+        
+    }
+    
+   
     /* SECURITY DECODE MD5 ONE TABLE*/
     $user_id = deCodeMD5_ONETABLE($user_id,'id','auth_account');
+    /* END SECURITY DECODE MD5 ONE TABLE*/
     $profilesArrays = LoginFunc($user_id,'','');
     $firstKeysProfile = empty($user_id) ? '' : array_keys($profilesArrays)[0];
     $role_id = empty($firstKeysProfile) ? '' : $profilesArrays[$firstKeysProfile]['role_id'];

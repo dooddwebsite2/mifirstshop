@@ -18,7 +18,7 @@
 
         }
     </style> -->
-
+    
   
     <div id="all">
 
@@ -44,10 +44,11 @@
                         </div>
                   
                         
-                    <!-- /#main-slider -->
+                    
                 </div>
             </div>
-
+            
+         
 
 
             <?php  include("./include/advantages_homepage.php");?>

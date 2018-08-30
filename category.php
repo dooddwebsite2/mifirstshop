@@ -141,7 +141,7 @@
                      
                         $product_cate_id = empty($_GET['cate_id']) ? '' : $_GET['cate_id'];
                         $product_sub_cate_id = empty($_GET['sub_cate_id']) ? '' : $_GET['sub_cate_id'];
-                        $prodArrays = getProduct('', $product_cate_id,$product_sub_cate_id ,'','','');
+                        $prodArrays = getProduct_withCategory('', $product_cate_id,$product_sub_cate_id ,'','','','');
                      
 
                         ?>

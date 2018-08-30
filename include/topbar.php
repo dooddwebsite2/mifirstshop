@@ -1,14 +1,15 @@
   <!-- *** TOPBAR ***
  _________________________________________________________ -->
+
  <div id="top" class="">
-    <div class="container ThaifontBangnam">
+    <div class="container ThaifontBangnam ">
         <div class="col-md-6 offer" data-animate="fadeInDown">
             
         </div>
-        <div class="col-md-6" data-animate="fadeInDown">
+        <div class="col-md-6  " data-animate="fadeInDown">
             <ul class="menu">
                 <?php if(empty($_SESSION['user_id'])){ ?>
-                <li><a href="#" data-toggle="modal" data-target="#login-modal">เข้าสู่ระบบ</a></li>
+                <li><a href="#"  data-toggle="modal" data-target="#login-modal">เข้าสู่ระบบ</a></li>
                 <?php } ?>
                 <?php if(!empty($_SESSION['user_id'])){ ?>
                 <li><a href="customer-account.php" >จัดการข้อมูล</a></li>

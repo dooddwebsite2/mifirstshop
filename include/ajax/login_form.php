@@ -21,6 +21,7 @@ if($action == 'login_request')
     else{
         $msg = "ไม่สามารถเข้าสู่ระบบได้";
     }
+  
     echo json_encode(array('profiles' => $profileArrays, 'status' => $status, 'msg'=>$msg));
 }
 ?>

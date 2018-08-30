@@ -9,6 +9,7 @@ if(isset($_GET['profileUserID']))
   
 }
 $now = time(); // Checking the time now when home page starts.
+// print_R($_SESSION);
 // echo 'time now '.date("Y-m-d H:i:s",$now);
 // print_r($_SESSION);
 // echo 'expire  '.date("Y-m-d H:i:s",$_SESSION["expire"]);
@@ -57,14 +58,24 @@ if(isset($_SESSION["expire"])){
     <link rel="shortcut icon" href="favicon.png">
 
     <!-- DATATABLE JQUERY PLUGIN -->
-    <link rel="stylesheet" type="text/css" href="css/jquery-datatable.min.css">
-  
-
+    <link rel="stylesheet" type="text/css" href="css/datatable/jquery-datatable.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="css/datatable/jquery_datatable_rowreorder.min.css">
+    <link rel="stylesheet" type="text/css" href="css/datatable/jquery_datatable_responsive.min.css">
+    <!-- JQUERY ROW EDITOR PLUGIN -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/datatable/jquery_datatable_button.min.css">
+    <link rel="stylesheet" type="text/css" href="css/datatable/jquery_datatable_editor.min.css">
+    <link rel="stylesheet" type="text/css" href="css/datatable/jquery_datatable_select.min.css"> -->
+   <!-- DROPZONE CSS -->
+    <link rel="stylesheet" type="text/css" href="css/dropzone/basic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/dropzone/basic.css">
+    <link rel="stylesheet" type="text/css" href="css/dropzone/dropzone.min.css">
+   
 
 
         <!-- *** SCRIPTS TO INCLUDE ***
  _________________________________________________________ -->
- <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script src="js/waypoints.min.js"></script>
@@ -73,9 +84,17 @@ if(isset($_SESSION["expire"])){
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/front.js"></script>
     <script src="js/bootstrapValidator.js"></script>
-    <script type="text/javascript" charset="utf8" src="js/่jquery-datatable.min.js"></script>
-
-
+    <script type="text/javascript" charset="utf8" src="js/datatable/jquery_datatable.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/datatable/jquery_datatable_rowreoder.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/datatable/jquery_datatable_responsive.min.js"></script>
+    <!-- JQUERY DATATABLE SELECT , EDITOR , BUTTON PLUGINS-->
+    <!-- <script type="text/javascript" charset="utf8" src="js/datatable/jquery_datatable_editor.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/datatable/jquery_datatable_button.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/datatable/jquery_datatable_select.min.js"></script> -->
+    <!-- DROPZONE PLUGIN -->
+    <script type="text/javascript" charset="utf8" src="js/dropzone/dropzone.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/dropzone/dropzone.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/dropzone/dropzone-amd-module.min.js"></script>
 </head>
 
 <!-- include center config -->
@@ -87,6 +106,7 @@ if(isset($_SESSION["expire"])){
 
 <script>
 $(document).ready(function(){
+    Dropzone.autoDiscover = false;
     $('body').find('img[src$="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]').remove();
    
 });

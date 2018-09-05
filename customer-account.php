@@ -13,7 +13,9 @@
 
               
                 <?php include("./include/profiles/profile_navleft.php");?>
-              
+                <?php
+
+?>
                 <div class="col-md-9">
                     <div class="box">
                         <h1>My account</h1>
@@ -55,85 +57,7 @@
 
                         <hr>
 
-                        <h3>Personal details</h3>
-                        <form>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="firstname">Firstname</label>
-                                        <input type="text" class="form-control" id="firstname">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="lastname">Lastname</label>
-                                        <input type="text" class="form-control" id="lastname">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="company">Company</label>
-                                        <input type="text" class="form-control" id="company">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="street">Street</label>
-                                        <input type="text" class="form-control" id="street">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="row">
-                                <div class="col-sm-6 col-md-3">
-                                    <div class="form-group">
-                                        <label for="city">Company</label>
-                                        <input type="text" class="form-control" id="city">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    <div class="form-group">
-                                        <label for="zip">ZIP</label>
-                                        <input type="text" class="form-control" id="zip">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    <div class="form-group">
-                                        <label for="state">State</label>
-                                        <select class="form-control" id="state"></select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    <div class="form-group">
-                                        <label for="country">Country</label>
-                                        <select class="form-control" id="country"></select>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="phone">Telephone</label>
-                                        <input type="text" class="form-control" id="phone">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email">
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Save changes</button>
-
-                                </div>
-                            </div>
-                        </form>
+                       
                     </div>
                 </div>
 

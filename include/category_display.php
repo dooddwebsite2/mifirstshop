@@ -15,7 +15,8 @@
                 <?php
                     /* get Category Query */
 
-                    $cateArrays = getCategory();
+                    $cateArrays = getCategory('',''," CONVERT (cate_name_th USING tis620) ",'');
+        
                     
                     /* ------------------ */
                 ?>
@@ -23,6 +24,7 @@
             <?php if(!empty($cateArrays)){ 
                 $x = 1;
                 $rowCount = count($cateArrays);
+               
                do {
 
             ?>
@@ -33,18 +35,18 @@
                         <div class="flipper">
                             <div class="front">
                                 <a href="category.php?cate_id=<?php echo $cateArrays[$x]['cate_id'];?>">
-                                    <img src="<?php echo $img_cate;?><?php echo $cateArrays[$x]['cate_img_2'];?>" alt="" class="img-responsive">
+                                    <img src="<?php echo 'img/category/'.$cateArrays[$x]['cate_id'].'/';?><?php echo $cateArrays[$x]['cate_img_1'];?>" alt="" class="img-responsive">
                                 </a>
                             </div>
                             <div class="back">
                             <a href="category.php?cate_id=<?php echo $cateArrays[$x]['cate_id'];?>">
-                                    <img src="<?php echo $img_cate;?><?php echo $cateArrays[$x]['cate_img_2'];?>" alt="" class="img-responsive">
+                                    <img src="<?php echo 'img/category/'.$cateArrays[$x]['cate_id'].'/';?><?php echo $cateArrays[$x]['cate_img_1'];?>" alt="" class="img-responsive">
                                 </a>
                             </div>
                         </div>
                     </div>
                     <a href="category.php?cate_id=<?php echo $cateArrays[$x]['cate_id'];?>" class="invisible">
-                        <img src="<?php echo $img_cate;?><?php echo $cateArrays[$x]['cate_img_2'];?>" alt="" class="img-responsive">
+                        <img src="<?php echo 'img/category/'.$cateArrays[$x]['cate_id'].'/';?><?php echo $cateArrays[$x]['cate_img_1'];?>" alt="" class="img-responsive">
                     </a>
                     <div class="text">
                         <h3>
@@ -61,18 +63,18 @@
                         <div class="flipper">
                             <div class="front">
                                 <a href="category.php?cate_id=<?php echo $cateArrays[$x + 1]['cate_id'];?>">
-                                    <img src="<?php echo $img_cate;?><?php echo $cateArrays[$x + 1]['cate_img_2'];?>" alt="" class="img-responsive">
+                                    <img src="<?php echo 'img/category/'.$cateArrays[$x + 1]['cate_id'].'/';?><?php echo $cateArrays[$x + 1]['cate_img_1'];?>" alt="" class="img-responsive">
                                 </a>
                             </div>
                             <div class="back">
                             <a href="category.php?cate_id=<?php echo $cateArrays[$x + 1]['cate_id'];?>">
-                                    <img src="<?php echo $img_cate;?><?php echo $cateArrays[$x + 1]['cate_img_2'];?>" alt="" class="img-responsive">
+                                    <img src="<?php echo 'img/category/'.$cateArrays[$x + 1]['cate_id'].'/';?><?php echo $cateArrays[$x + 1]['cate_img_1'];?>" alt="" class="img-responsive">
                                 </a>
                             </div>
                         </div>
                     </div>
                     <a href="category.php?cate_id=<?php echo $cateArrays[$x + 1]['cate_id'];?>" class="invisible">
-                        <img src="<?php echo $img_cate;?><?php echo $cateArrays[$x + 1]['cate_img_2'];?>" alt="" class="img-responsive">
+                        <img src="<?php echo 'img/category/'.$cateArrays[$x + 1]['cate_id'].'/';?><?php echo $cateArrays[$x + 1]['cate_img_1'];?>" alt="" class="img-responsive">
                     </a>
                     <div class="text">
                         <h3>

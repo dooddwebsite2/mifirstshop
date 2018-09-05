@@ -10,7 +10,7 @@
 
 /* db config */
 $img_blog = $_SERVER["DOCUMENT_ROOT"]."/img/blog/";
-$img_cate = "img/category/";
+
 
 /* set date */
 date_default_timezone_set("Asia/Bangkok");
@@ -26,11 +26,22 @@ function returnPath($str,$session_id,$product_id,$type){
     $product_id = empty($product_id) ? 0 : $product_id;
     switch ($str) {
         case "tmp_img":
-            $str = 'tmp'.$ds.$session_id.'_';
+            $str = 'tmp'.$ds.$session_id.'__';
+            $str .= $type == 'only_id' ? '' :$time_stamp.$ds;
+        break;
+        case "tmp_category":
+            $str = 'tmp'.$ds.'category'.$ds.$session_id.'__';
             $str .= $type == 'only_id' ? '' :$time_stamp.$ds;
         break;
         case "product":
             $str = 'img'.$ds.'product'.$ds.$product_id.$ds;
+        break;
+        case "category":
+            $cate_id = empty($product_id) ? 0 : $product_id;
+             $str = 'img'.$ds.'category'.$ds.$cate_id.$ds;     
+        break;
+        case "relative_category":
+            $str = 'img'.$ds.'category'.$ds.$product_id.$ds;
         break;
         default:
             echo "errors";
@@ -92,11 +103,18 @@ function executeQuery($str)
 /* END db config */
 
 /* GET PARENT CATEGORY */
-function getCategory() {
-    $QueryString = "SELECT * FROM category WHERE cate_active = 1 ORDER BY CONVERT (cate_name_th USING tis620);";
+function getCategory($cate_id,$session_id,$order_by,$limits) {
+    $conditionCate = '';
+    $conditionCate .= ($cate_id == 0 ) ? '' : " AND category.cate_id = {$cate_id} ";
+    $conditionCate .= ($session_id == 0 ) ? '' : " AND category.create_by = {$session_id} ";
+    $ConditionOrders = empty($order_by) ? '' : " {$order_by} ";
+    $Conditionlimits = empty($limits) ? '' : " LIMIT {$limits} ";
+    $QueryString = "SELECT * FROM category WHERE cate_active = 1 {$conditionCate} ORDER BY {$ConditionOrders} {$Conditionlimits}";
     $cateArrays = array();
     $resultStr = sendQuery($QueryString);
     $rowCount = 0;
+    
+    
     while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
         ++ $rowCount;
         $cateArrays[$rowCount]['cate_id'] = empty($rows['cate_id'])?'-':$rows['cate_id'];                            
@@ -133,6 +151,8 @@ function getSubCategory($cate_id,$cate_orderby,$cate_limit)
         $cateArrays[$rows['parent_id']]['parent_name_th'] =  empty($rows['parent_name_th'])?'-':$rows['parent_name_th'];
         $cateArrays[$rows['parent_id']]['parent_img_1'] =  empty($rows['parent_img_1'])?'-':$rows['parent_img_1'];
         $cateArrays[$rows['parent_id']]['cate_desc'] =  empty($rows['cate_desc'])?'-':$rows['cate_desc'];
+        $cateArrays[$rows['parent_id']]['cate_img_1'] =  empty($rows['cate_img_1'])?'-':$rows['cate_img_1'];
+        $cateArrays[$rows['parent_id']]['sub_cate_name'][] =  empty($rows['sub_cate_name_th'])? '' :$rows['sub_cate_name_th'];
         $sub_cate_id = empty($rows['sub_cate_id']) ? 0 : $rows['sub_cate_id'];
         $cateArrays[$rows['parent_id']]['child'][$sub_cate_id] = array();    
         if($sub_cate_id != 0 ){
@@ -152,16 +172,17 @@ function getSubCategory($cate_id,$cate_orderby,$cate_limit)
 
 
 /* MAIN GET PRODUCT จะเอาความสัมพันธ์ที่ผูกกับ product มาด้วย */
-function getProduct_withCategory($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_limit,$typeofSex,$session_id){
+function getProduct_withCategory($product_id,$cate_id,$sub_cate_id,$product_orderby,$product_limit,$typeofSex,$session_id,$like_sub_id){
 
     $conditionProd = " WHERE 1=1 ";
     $conditionProd .= ($product_id == 0 ) ? '' : " AND product.product_id = {$product_id} ";
     $conditionProd .= empty($session_id) ? '' : " AND product.create_by = {$session_id} ";
+    $conditionProd .= empty($like_sub_id) ? '' : " AND product_cate_rel.cate_id_multi = '{$like_sub_id}' ";
     $conditionProd .= empty($product_orderby) ? '' : " ORDER BY {$product_orderby} ";
     $conditionProd .= empty($product_limit) ? '' : " LIMIT {$product_limit} ";
     $conditionCate =  empty($cate_id) ? '' : " WHERE r2.cate_id = {$cate_id} ";
     $conditionCate .= empty($sub_cate_id) ? '' : " AND r2.sub_cate_id = {$sub_cate_id} "; 
-    $QueryString = "SELECT r2.*,(SELECT cate_name_th  FROM category WHERE cate_id = r2.cate_id) AS parent_name_th FROM (
+    $QueryString = "SELECT r2.*,(SELECT cate_name_th  FROM category WHERE cate_id = r2.cate_id) AS parent_name_th,(SELECT cate_id  FROM category WHERE cate_id = r2.cate_id) AS parent_id FROM (
         SELECT  * FROM (
             SELECT product.*,product_cate_rel.cate_id_multi,product_cate_rel.product_cate_rel_id,
             product_cate_rel.product_cate_rel_name 
@@ -175,12 +196,13 @@ function getProduct_withCategory($product_id,$cate_id,$sub_cate_id,$product_orde
         JOIN sub_category AS s ON FIND_IN_SET(s.sub_cate_id,r1.cate_id_multi)
         )r2  {$conditionCate} 
         ";
-     
+ 
     $prodArrays = array();
     $resultStr = sendQuery($QueryString);
     if (empty($resultStr)) {
         return $prodArrays;
     }
+    
     while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
         $prodArrays[$rows['product_id']]['product_id'] =  empty($rows['product_id'])?'-':$rows['product_id'];
         $prodArrays[$rows['product_id']]['product_name'] =  empty($rows['product_name'])?'-':$rows['product_name'];
@@ -198,9 +220,10 @@ function getProduct_withCategory($product_id,$cate_id,$sub_cate_id,$product_orde
         $prodArrays[$rows['product_id']]['product_detail'] =  empty($rows['product_detail'])? '' :$rows['product_detail'];
         $prodArrays[$rows['product_id']]['product_meterial'] =  empty($rows['product_meterial'])? '' :$rows['product_meterial'];
         $prodArrays[$rows['product_id']]['product_size'] =  empty($rows['product_size'])? '' :$rows['product_size'];
-        $prodArrays[$rows['product_id']]['product_discount'] =  empty($rows['product_discount'])? '' :$rows['product_discount'];
+        $prodArrays[$rows['product_id']]['product_discount'] =  empty($rows['product_discount'])? 0 :$rows['product_discount'];
         $prodArrays[$rows['product_id']]['product_shopee_url'] =  empty($rows['product_shopee_url'])? '' :$rows['product_shopee_url'];
         $prodArrays[$rows['product_id']]['parent_name_th'] =  empty($rows['parent_name_th'])? '' :$rows['parent_name_th'];
+        $prodArrays[$rows['product_id']]['parent_id'] =  empty($rows['parent_id'])? '' :$rows['parent_id'];
         $prodArrays[$rows['product_id']]['is_for_all'] =  empty($rows['is_for_all'])? '' :$rows['is_for_all'];
 
         $prodArrays[$rows['product_id']]['product_id_ref'] =  empty($rows['product_id_ref'])? '' :$rows['product_id_ref'];
@@ -210,9 +233,10 @@ function getProduct_withCategory($product_id,$cate_id,$sub_cate_id,$product_orde
         $prodArrays[$rows['product_id']]['product_logistic_size_3'] =  empty($rows['product_logistic_size_3'])? '' :$rows['product_logistic_size_3'];
         $prodArrays[$rows['product_id']]['product_logistic_amount'] =  empty($rows['product_logistic_amount'])? '' :$rows['product_logistic_amount'];
         $prodArrays[$rows['product_id']]['product_logistic_send'] =  empty($rows['product_logistic_send'])? '' :$rows['product_logistic_send'];
-        $prodArrays[$rows['product_id']]['product_stock'] =  empty($rows['product_stock'])? '' :$rows['product_stock'];
+        $prodArrays[$rows['product_id']]['product_stock'] =  empty($rows['product_stock'])? 0 :$rows['product_stock'];
        
         $prodArrays[$rows['product_id']]['product_type'] =  empty($rows['product_type'])? '' :$rows['product_type'];
+        $prodArrays[$rows['product_id']]['product_logistic_time'] =  empty($rows['product_logistic_time'])? '' :$rows['product_logistic_time'];
        
         
         $sub_cate_id = empty($rows['sub_cate_id']) ? 0 : $rows['sub_cate_id'];
@@ -361,6 +385,16 @@ function deCodeMD5_onetable($hashKeys,$columns,$table){
 
 }
 
+
+
+// ต้องส่งเป็น array มาเท่านั้น
+function DELETE_STRUCTURE($STR_ARRAYS){
+    if(!empty($STR_ARRAYS)){
+        foreach($STR_ARRAYS as $_KEYS => $_QUERYSTRING){
+                executeQuery($_QUERYSTRING);
+        }
+    }
+}
 /* FACEBOOK API */
 function sendInboxMessage() {
    

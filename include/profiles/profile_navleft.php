@@ -49,8 +49,8 @@
                         <i class="fa fa-shopping-cart"></i>สินค้า</a>
                 </li>
                 <li>
-                    <a href="customer-account.php">
-                        <i class="fa fa-list-alt"></i>ประเภทสินค้า</a>
+                    <a href="admin-category.php">
+                        <i class="fa fa-list-alt"></i>หมวดหมู่</a>
                 </li>
                 <li>
                     <a href="customer-account.php">

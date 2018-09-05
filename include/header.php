@@ -3,7 +3,7 @@
 <?php require_once("timezones.php");?>
 <?php
 session_start();
-if(isset($_GET['profileUserID']))
+if(isset($_GET['profileUserID']) && isset($_SESSION["expire"]))
 { 
     $_SESSION["user_id"] = $_GET['profileUserID'];
   

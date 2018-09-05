@@ -18,7 +18,7 @@
 
                     <div id="blog-homepage" class="row">
                         <?php
-                    $QueryString = "SELECT * FROM content ORDER BY content.content_create_date DESC LIMIT 0,2";
+                    $QueryString = "SELECT * FROM content ORDER BY content.content_create_date DESC LIMIT 0,3";
                         $resultStr = sendQuery($QueryString);
                     
 
@@ -52,7 +52,7 @@
                                 }
                                 
                      ?>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="post">
                                 <h2><a href="post.php?content_id=<?php echo $content_id;?>" alt="<?php echo $content_name;?>"><?php echo $content_name;?></a></h2>
                                 <p class="author-category">By <?php echo $content_create_by;?> | <?php echo $content_create_date;?>

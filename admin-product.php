@@ -8,7 +8,11 @@
  
     <div id="all" class="ThaifontBangnam ContentTxt">
         <style>
-
+            .actions{
+               color:#4fbfa8;
+               text-decoration:none;
+               cursor:pointer;
+            }
         </style>
         <div id="content">
             <div class="container">
@@ -29,7 +33,7 @@
 
                         <form>
                             <?php
-                                  $prodArrays = getProduct_withCategory('', '','' ,'','','','');   
+                                  $prodArrays = getProduct_withCategory('', '','' ,'','','','','');   
                             ?>
                             <div class="table-responsive">
                                 <table id="table_product" class="table table-striped table-hover dt-responsive display nowrap"   cellspacing="0" style="width:100%" >
@@ -37,12 +41,12 @@
                                 <thead>
                                             <tr>
                                                 <!-- <th  style="text-align: center;">#</th> -->
-                                                <th    style="text-align: center;">ชื่อสินค้า</th>
+                                                <th   style="text-align: center;">ชื่อสินค้า</th>
                                                 <th   style="text-align: center;">&nbsp;</th>
                                                 <th   style="text-align: center;">หมวดหมู่</th>
-                                                <th  style="text-align: center;" >จำนวนสินค้า</th>
+                                                <th   style="text-align: center;" >จำนวนสินค้า</th>
                                                 <!-- <th  style="text-align: center;" >รายละเอียด</th> -->
-                                                <th  style="text-align: center;" >ราคา(฿)</th>
+                                                <th   style="text-align: center;" >ราคา(฿)</th>
                                                 <th   >&nbsp;</th>
                                             </tr>
                                         </thead>
@@ -79,11 +83,10 @@
                                                 </a></td>
                                                 <td  align="center"><a href="#"  onClick="call_productModalAction(<?php echo $keyProd;?>)" title="คลิ๊กเพื่อดูรายละเอียด" ><?php echo $prodArrays[$keyProd]['parent_name_th'].'->'.implode(", ", $prodArrays[$keyProd]['sub_cate_name']);?></a></td>
                                                 <td align="center"><a href="#"  onClick="call_productModalAction(<?php echo $keyProd;?>)" title="คลิ๊กเพื่อดูรายละเอียด"><?php echo $prodArrays[$keyProd]['product_stock'];?></a></td>
-                                                 <td  align="center"><a href="#"  onClick="call_productModalAction(<?php echo $keyProd;?>)" title="คลิ๊กเพื่อดูรายละเอียด"><?php echo $product_price;?></a></td>
-                                                <td  align="left"><a href="#">แก้ไข</a>/<a href="#">ลบ</a></td>
+                                                <td  align="center"><a href="#"  onClick="call_productModalAction(<?php echo $keyProd;?>)" title="คลิ๊กเพื่อดูรายละเอียด"><?php echo $product_price;?></a></td>
+                                                <td  align="left"><a href="admin-updproduct.php?product_id=<?php echo $keyProd;?>"  >แก้ไข</a>/<span class="actions"  onClick="call_deleteFunc(<?php echo $keyProd;?>)">ลบ</span></td>
                                                 </tr>
                                             <?php
-                                            
                                                 }
                                             ?>
                                           
@@ -133,6 +136,23 @@ $(document).ready( function () {
 
 } );
 
+
+function call_deleteFunc(keyProd){
+    $('#loadingDiv').show();
+        var url = './include/ajax/product_form.php';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                id: keyProd,
+                action: "product_delete"
+            },
+            success: function (data, status, xhr) {
+                $('#loadingDiv').hide();
+                window.location.href = "admin-product.php?";
+            }
+        });
+}
 function call_productModalAction(keyProd){
     $('#loadingDiv').show();
             var url = './include/ajax/product_form.php';

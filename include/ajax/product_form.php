@@ -22,6 +22,7 @@ $product_logistic_amount=isset($_POST["product_logistic_amount"])?$_POST["produc
 $product_logistic_time=isset($_POST["product_logistic_time"])?$_POST["product_logistic_time"]:"-";
 $product_logistic_send=isset($_POST["product_logistic_send"])?$_POST["product_logistic_send"]:"-";
 $subArrays=empty($_POST["subArrays"])? "":$_POST["subArrays"];
+$_filename =empty($_POST["file_name"])? "":$_POST["file_name"];
 
 
 if(!empty($_FILES)){
@@ -34,9 +35,22 @@ if(!empty($_FILES)){
     }   
 }
 
+if($action == 'list_image'){
+    $target_prod_paths = returnPath('product','',$id,'');
+    $prod_files['img']['full_path'] = glob("{$target_prod_paths}*.*", GLOB_BRACE);
+    $count = 0;
+    foreach($prod_files['img']['full_path'] as $_original_file => $_original_file_value){ 
+        $prod_files['img']['relative_path'][] =  basename($_original_file_value); 
+        $prod_files['img']['img_size'][] =  filesize($_original_file_value);
+
+    } 
+    echo json_encode($prod_files);
+
+}
+
 if($action == 'product_details')
 {
-    $prodArrays = getProduct_withCategory($id, '','' ,'','','','');
+    $prodArrays = getProduct_withCategory($id, '','' ,'','','','','');
 
     $img1 = empty($prodArrays[$id]["product_img1"]) ? 'no_image.png' : $prodArrays[$id]["product_img1"];
     $img2 = empty($prodArrays[$id]["product_img2"]) ? 'no_image.png' : $prodArrays[$id]["product_img2"];
@@ -58,7 +72,7 @@ if($action == 'product_details')
     $html.= "<h3><b>หมวดหมู่:</b>&nbsp;".$prodArrays[$id]['parent_name_th'].'->'.implode(", ", $prodArrays[$id]['sub_cate_name'])."</h3>";
     $html.= "<h3><b>ประเภทสินค้า:</b>&nbsp;".$product_type."</h3>";
     $html.= "<h3><b>ลดราคา:</b>&nbsp;".$product_discount_txt."%</h3>";
-    $html.= "<h3><b>ราคา:</b>&nbsp;".$product_price."</h3>";
+    $html.= "<h3><b>ราคา(฿):</b>&nbsp;".$product_price."</h3>";
     $html.= "<h3><b>รายละเอียด:</b>&nbsp;</h3><p>".$prodArrays[$id]['product_detail']."</p>";
     $html.= '<div class="row">';
     $html.= '<div class="col-xs-3 col-sm-3" align="center" ><img src="'.$img1_path.'" class="img img-responsive"  alt=""></div>';
@@ -86,7 +100,7 @@ if($action == 'product_add'){
     $time_stamp = getTimeStamp('',$date_now);
     $fol_tmp = '';$fol_tmps = '';
     foreach($folders as $_fol => $_folpath) {
-        $fol_tmp =  $_folpath ?  explode("_",$_folpath) : '';
+        $fol_tmp =  $_folpath ?  explode("__",$_folpath) : '';
         $fol_tmps = ($fol_tmp[1] > $fol_tmps) ?  $fol_tmp[1] : $fol_tmps;
     }
  
@@ -132,8 +146,16 @@ if($action == 'product_add_img'){
 }
 if($action == 'product_delete_img'){
     echo 'product_delete_img';
+    echo ' id : >>'.$id. '<<';
+    echo $_filename;
 }
-
+if($action == 'product_delete'){
+    $_QUERYARRAYS =  array();
+    $_QUERYARRAYS[] = "DELETE FROM product WHERE product_id = {$id}";
+    $_QUERYARRAYS[] = "DELETE FROM product_cate_rel WHERE product_id = {$id}";
+    $_QUERYARRAYS[] = "DELETE FROM product_brand_rel WHERE product_id = {$id}";
+    DELETE_STRUCTURE($_QUERYARRAYS);
+ }
 
 ?>
 

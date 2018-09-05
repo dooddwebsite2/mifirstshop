@@ -107,18 +107,12 @@ var myFORMDropzone = new Dropzone("div#myAwesomeDropzone", {
                 var product_logistic_time = $('#product_logistic_time').val();
                 var product_logistic_send = $('#product_logistic_send').val();
        
-           
-            //var subArrays = [];
-                var subArrays  = findSubCateId_Return();
-            // if(subArrays.length > 0 && product_name != '' && product_price > 0 
-            //    && product_stock > 0 && category > 0 && product_id_ref != '' )
+    
+         var subArrays  = findSubCateId_Return();
+
             if(subArrays.length > 0 )
             {
                 
-                // alert(session_id);
-                // var jsonSubArr = JSON.stringify(subArrays);
-                // console.log(subArrays);
-                // console.log(jsonSubArr);
                 var url = './include/ajax/product_form.php';    
            
                 $.ajax({    

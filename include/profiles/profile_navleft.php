@@ -53,7 +53,7 @@
                         <i class="fa fa-list-alt"></i>หมวดหมู่</a>
                 </li>
                 <li>
-                    <a href="customer-account.php">
+                    <a href="admin-section.php">
                         <i class="fa fa-book"></i>บทความ</a>
                 </li>
                 <li>

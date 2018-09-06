@@ -316,6 +316,49 @@ function getProduct($product_id,$product_orderby,$product_limit,$typeofSex,$sess
     } 
     return $prodArrays;
 }
+
+
+
+/* GET CONTENT */
+function getContent($content_id,$session_id,$comment_id,$content_name,$order_by,$limit,$fields){
+    $conditionCond = " WHERE 1=1 ";
+    $conditionCond .= ($content_id == 0 ) ? '' : " AND content.content_id = {$content_id} ";
+    $conditionCond .= empty($session_id) ? '' : " AND content.content_create_by = {$session_id} ";
+    $conditionCond .= empty($comment_id) ? '' : " AND content_comment.comment_id = {$comment_id} ";
+    $conditionCond .= empty($content_name) ? '' : " AND content.content_name Like '%{$content_name}%' ";
+    $conditionCond .= empty($order_by) ? '' : " ORDER BY {$order_by} ";
+    $conditionCond .= empty($limit) ? '' : " LIMIT {$limit} ";
+ 
+    $QueryString = "SELECT content.*,content_comment.comment_email,content_comment.comment_message
+    ,content_comment.comment_poster_name,content_comment.comment_subject,content_comment.comment_id
+    ,auth_account.u_name FROM content 
+    LEFT JOIN content_comment 
+    ON content.content_id = content_comment.content_id
+    LEFT JOIN auth_account ON content.content_create_by = auth_account.id
+     {$conditionCond}
+    ";
+     
+    $condArrays = array();
+    $resultStr = sendQuery($QueryString);
+    if (empty($resultStr)) {
+        return $condArrays;
+    }
+    $fields = empty($fields) ? 'content_id' : $fields;
+    while($rows = $resultStr->fetch_assoc()){
+        $condArrays[$rows[$fields]]['attr'] = $rows;
+        if(!is_null($rows['comment_id'])){
+            $condArrays[$rows[$fields]]['child'][] = empty($rows['comment_id']) ? '' : $rows;
+        }
+    }
+
+
+    
+    return $condArrays;
+
+}
+
+
+
 function deCodeMD5($str)
 {
     $navBarArray = array("6a992d5529f459a44fee58c733255e86"=>"index",

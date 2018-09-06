@@ -72,6 +72,10 @@ if(isset($_SESSION["expire"])){
     <link rel="stylesheet" type="text/css" href="css/dropzone/dropzone.min.css">
    
 
+    <!-- Include Editor style. -->
+<link href='css/froala/froala_editor.min.css' rel='stylesheet' type='text/css' />
+<link href='css/froala/froala_style.min.css' rel='stylesheet' type='text/css' />
+ 
 
         <!-- *** SCRIPTS TO INCLUDE ***
  _________________________________________________________ -->
@@ -95,6 +99,9 @@ if(isset($_SESSION["expire"])){
     <script type="text/javascript" charset="utf8" src="js/dropzone/dropzone.min.js"></script>
     <script type="text/javascript" charset="utf8" src="js/dropzone/dropzone.js"></script>
     <script type="text/javascript" charset="utf8" src="js/dropzone/dropzone-amd-module.min.js"></script>
+
+    <!-- Include Texteditor JS file. -->
+    <script type='text/javascript' src='js/froala/froala_editor.min.js'></script>
 </head>
 
 <!-- include center config -->

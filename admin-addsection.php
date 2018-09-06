@@ -13,7 +13,7 @@
               
                 <?php include("./include/profiles/profile_navleft.php");?>
 
-                <?php include("./include/content/action_content.php");?>
+                <?php include("./include/category/action_category.php");?>
 
 
 

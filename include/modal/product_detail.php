@@ -3,7 +3,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="productdetailmodalLabel">รายละเอียดสินค้า</h2>
+            <!-- SET DEFAULT = รายละเอียดสินค้า ถ้าไม่ส่งค่าไรมา-->
+                <h2 class="modal-title" id="productdetailmodalLabel_headerTxt">รายละเอียดสินค้า</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

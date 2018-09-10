@@ -75,8 +75,30 @@ if(isset($_SESSION["expire"])){
     <!-- Include Editor style. -->
 <link href='css/froala/froala_editor.min.css' rel='stylesheet' type='text/css' />
 <link href='css/froala/froala_style.min.css' rel='stylesheet' type='text/css' />
- 
+<link href='css/froala/froala_style.css' rel='stylesheet' type='text/css' />
+<link href='css/froala/froala_editor.css' rel='stylesheet' type='text/css' />
+<link href='css/froala/froala_editor.pkgd.css' rel='stylesheet' type='text/css' />
+<link href='css/froala/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+<?php
+// INSIDE PLUGINS DIRECTORY
+    foreach (glob("css/froala/plugins/*.*") as $froala_plugins_filename_css)
+    {
 
+       echo "<link href='".$froala_plugins_filename_css."' rel='stylesheet' type='text/css' />";
+    }
+    // INSIDE PLUGINS DIRECTORY
+    foreach (glob("css/froala/themes/*.*") as $froala_themes_filename_css)
+    {
+
+    echo "<link href='".$froala_themes_filename_css."' rel='stylesheet' type='text/css' />";
+    }
+     // INSIDE PLUGINS DIRECTORY
+     foreach (glob("css/froala/third_party/*.*") as $froala_third_party_filename_css)
+     {
+ 
+     echo "<link href='".$froala_third_party_filename_css."' rel='stylesheet' type='text/css' />";
+     }
+?>
         <!-- *** SCRIPTS TO INCLUDE ***
  _________________________________________________________ -->
     <script src="js/jquery-1.11.0.min.js"></script>
@@ -102,6 +124,29 @@ if(isset($_SESSION["expire"])){
 
     <!-- Include Texteditor JS file. -->
     <script type='text/javascript' src='js/froala/froala_editor.min.js'></script>
+    <script type='text/javascript' src='js/froala/froala_editor.pkgd.min.js'></script>
+    <!-- FONT AWESOME 5 -->
+    <script type='text/javascript' src='js/froala/fontawesome_5_all.js'></script>
+    <?php
+    // INSIDE PLUGINS DIRECTORY
+    foreach (glob("js/froala/plugins/*.*") as $froala_plugins_filename)
+    {
+
+        echo '<script type="text/javascript" src="'.$froala_plugins_filename.'"></script>';
+    }
+    // INSIDE LANGUAGES DIRECTORY
+    foreach (glob("js/froala/languages/*.*") as $froala_plugins_filename)
+    {
+
+        echo '<script type="text/javascript" src="'.$froala_plugins_filename.'"></script>';
+    }
+    // INSIDE THIRD PARTY DIRECTORY
+    foreach (glob("js/froala/third_party/*.*") as $froala_plugins_filename)
+    {
+
+        echo '<script type="text/javascript" src="'.$froala_plugins_filename.'"></script>';
+    }
+    ?>
 </head>
 
 <!-- include center config -->

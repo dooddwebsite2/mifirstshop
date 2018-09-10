@@ -26,18 +26,18 @@
                 <div class="col-md-9">
                     <div class="box">
                         <h1>บทความ&nbsp;&nbsp;
-                        <span onclick="window.location.href='admin-addsection.php'" class="btn btn-default btn-sm btn-success pull-right" style="margin-top:5px;"><i class="fa fa-pencil"></i> เพิ่ม</span></h1>
+                        <span onclick="window.location.href='admin-addsection.php'" class="btn btn-default btn-sm btn-success pull-right" style="margin-top:5px;"><i class="fas fa-plus"></i> เพิ่ม</span></h1>
                         <form>
                             <?php
                              
                        
                              $condArrays = getContent('','','','','','','content_id');
-                            //  echo '<PRE>';
-                            //  print_r($condArrays);
+                            //   echo '<PRE>';
+                            //   print_r($condArrays);
                          
                             ?>
                             <div class="table-responsive">
-                                <table id="table_product" class="table table-striped table-hover dt-responsive display nowrap"   cellspacing="0" style="width:100%" >
+                                <table id="table_content" class="table table-striped table-hover dt-responsive display nowrap"   cellspacing="0" style="width:100%" >
                                        
                                 <thead>
                                             <tr>
@@ -77,12 +77,12 @@
                      
                                             ?>
         
-                                                <td  align="left"><a href="#" onClick="call_productModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" ><?php echo $content_name;?></a></td>
-                                                <td  align="left"><a href="#" onClick="call_productModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" >
+                                                <td  align="left"><a href="#" onClick="call_contentModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" ><?php echo $content_name;?></a></td>
+                                                <td  align="left"><a href="#" onClick="call_contentModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" >
                                                 <?php echo $content_preface;?>
                                                 </a></td>
-                                                <td  align="center"><a href="#" onClick="call_productModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" > <?php echo $condArrays[$condProd]['attr']['u_name'];?></a></td>
-                                                <td align="center"><a href="#" onClick="call_productModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด"><?php echo isset($condArrays[$condProd]['child'])? count($condArrays[$condProd]['child']) : '0';?></a></td>
+                                                <td  align="center"><a href="#" onClick="call_contentModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" > <?php echo $condArrays[$condProd]['attr']['u_name'];?></a></td>
+                                                <td align="center"><a href="#" onClick="call_contentModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด"><?php echo isset($condArrays[$condProd]['child'])? count($condArrays[$condProd]['child']) : '0';?></a></td>
                                                 <td  align="left"><a href="admin-updcategory.php?cate_id=<?php echo $condProd;?>"  >แก้ไข</a>/<span class="actions"  onClick="call_delCategory(<?php echo $condProd;?>)">ลบ</span></td>
                                             
                                                  </tr>
@@ -120,7 +120,7 @@
 <script>
 $(document).ready( function () {
     // $('textarea#froala-editor').froalaEditor();
-    $('#table_product').DataTable( {
+    $('#table_content').DataTable( {
       responsive: true,
         "columnDefs": [
             
@@ -168,19 +168,20 @@ function call_delCategory(condProd){
             }
         });
 }
-function call_productModalAction(condProd){
+function call_contentModalAction(condProd){
     $('#loadingDiv').show();
-            var url = './include/ajax/category_form.php';
+            var url = './include/ajax/content_form.php';
             $.ajax({
                 type: "POST",
                 url: url,
                 data: {
-                    id: condProd,
+                    content_id: condProd,
                     action: "content_detail"
                 },
                 success: function (data, status, xhr) {
                     $('#loadingDiv').hide();
                     var contents = data;
+                    $('#productdetailmodal').find('#productdetailmodalLabel_headerTxt').html('บทความ');
                     $("#productdetailmodal").find(".modal-body").html(contents);
                     $('#productdetailmodal').modal('show');
                 }

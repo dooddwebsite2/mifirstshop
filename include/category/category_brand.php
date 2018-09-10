@@ -34,7 +34,7 @@
                                 </div>
 
                                 <button class="btn btn-default btn-sm btn-primary">
-                                    <i class="fa fa-pencil"></i> Apply</button>
+                                    <i class="fas fa-plus"></i> Apply</button>
 
                             </form>
 

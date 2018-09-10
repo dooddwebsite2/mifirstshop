@@ -26,7 +26,7 @@
                 <div class="col-md-9">
                     <div class="box">
                         <h1>สินค้า&nbsp;&nbsp;
-                        <span onclick="window.location.href='admin-addproduct.php'" class="btn btn-default btn-sm btn-success pull-right" style="margin-top:5px;"><i class="fa fa-pencil"></i> เพิ่ม</span></h1>
+                        <span onclick="window.location.href='admin-addproduct.php'" class="btn btn-default btn-sm btn-success pull-right" style="margin-top:5px;"><i class="fas fa-plus"></i> เพิ่ม</span></h1>
                         <!-- <p class="lead">เพิ่ม ลบ แก้ไข ข้อมูลสินค้าได้ที่นี่ (เฉพาะสิทธิ์ผู้ดูแลระบบเท่านั้น)</p>
                         <p class="text-muted">** หมายเหตุ เมื่อลบสินค้าแล้วความสัมพันธ์ของตารางอื่นที่ผูกกับสินค้าตัวนี้จะหายไปทั้งหมดอย่างถาวร ดูดีๆก่อนลบอย่ามือลั่น !!</p> -->
 

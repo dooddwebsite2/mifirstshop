@@ -144,33 +144,41 @@
     }
    
     function hiddenTag(id){
-        var url = './include/ajax/category_form.php';    
-        $.ajax({    
-            type: "POST",
-            url: url,
-            data: {sub_cate_id:id,action:"category_search_prod"},
-            success: function(data,status,xhr){
-                var jsonArraysList = JSON.parse(xhr.responseText);
-                var count = 0;
-                var html = 'สินค้ามีการผูกอยู่กับหมวดหมู่นี้อยู่ ลบไม่ได้ ต้องไปแก้ความสัมพันธ์สินค้าดังกล่าวก่อน' + "\n";
-                if(jsonArraysList.status == true){
-                    $.each(jsonArraysList.prodArrays, function($_prodKeys, $_prodVal)
-                    {
-                        ++ count;
-                        html += count + ". " + $_prodVal.product_name + "\n";
-                    });
-                    alert(html);
-                }else{
-                    $("span#tag_"+id).remove();
-                    if($('#sub_cate_tag > span').size() == 0){
-                        $('#lengthSubCate').show();
+        if(id > 0){
+            var url = './include/ajax/category_form.php';    
+            $.ajax({    
+                type: "POST",
+                url: url,
+                data: {sub_cate_id:id,action:"category_search_prod"},
+                success: function(data,status,xhr){
+                    var jsonArraysList = JSON.parse(xhr.responseText);
+                    var count = 0;
+                    var html = 'สินค้ามีการผูกอยู่กับหมวดหมู่นี้อยู่ ลบไม่ได้ ต้องไปแก้ความสัมพันธ์สินค้าดังกล่าวก่อน' + "\n";
+                    if(jsonArraysList.status == true){
+                        $.each(jsonArraysList.prodArrays, function($_prodKeys, $_prodVal)
+                        {
+                            ++ count;
+                            html += count + ". " + $_prodVal.product_name + "\n";
+                        });
+                        alert(html);
+                    }else{
+                        remoteTag(id);
                     }
+                    // window.location.href = "admin-category.php";alert("เพิ่มข้อมูลเสร็จสมบูรณ์");
                 }
-                // window.location.href = "admin-category.php";alert("เพิ่มข้อมูลเสร็จสมบูรณ์");
-            }
-        });
-       
+            });
+        }
+        else{
+            remoteTag(id);
+        }
     }
+
+   function remoteTag(id){
+        $("span#tag_"+id).remove();
+        if($('#sub_cate_tag > span').size() == 0){
+            $('#lengthSubCate').show();
+        }
+   }
    function call_subCategory(id){
        var subid = id ? id : 0;
        var cateArrays = <?php echo json_encode($cate_Arr); ?>;

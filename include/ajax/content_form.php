@@ -11,15 +11,42 @@ $category =empty($_POST["category"])? "":$_POST["category"];
 $cate_desc =empty($_POST["cate_desc"])? "":$_POST["cate_desc"];
 $subArrays=empty($_POST["subArrays"])? "":$_POST["subArrays"];
 $sub_cate_id=isset($_POST["sub_cate_id"])?$_POST["sub_cate_id"]:"";
+$content_id=isset($_POST["content_id"])?$_POST["content_id"]:"";
+
+
 
 if(!empty($_FILES)){
-    $target_img_path = returnPath('tmp_category',$session_id,'','');
-    foreach($_FILES['file']['name'] as $_keys => $_info_files){
-        $temp = $_FILES['file']['tmp_name'][$_keys];
-        $original_filename = explode(".",$_FILES['file']['name'][$_keys]); 
-        $newfiles = MD5($original_filename[0]).'.'.pathinfo($_FILES['file']['name'][$_keys], PATHINFO_EXTENSION);
-        move_uploaded_file($temp, $target_img_path.$newfiles);
-    }   
+    $allowedExts = array("gif", "jpeg", "jpg", "png");
+
+    // Get filename.
+    $temp = explode(".", $_FILES["file"]["name"]);
+
+    // Get extension.
+    $extension = end($temp);
+
+    // An image check is being done in the editor but it is best to
+    // check that again on the server side.
+    // Do not use $_FILES["file"]["type"] as it can be easily forged.
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime = finfo_file($finfo, $_FILES["file"]["tmp_name"]);
+
+    if ((($mime == "image/gif")
+    || ($mime == "image/jpeg")
+    || ($mime == "image/pjpeg")
+    || ($mime == "image/x-png")
+    || ($mime == "image/png"))
+    && in_array($extension, $allowedExts)) {
+        // Generate new random name.
+        $name = sha1(microtime()) . "." . $extension;
+
+        // Save file in the uploads folder.
+        move_uploaded_file($_FILES["file"]["tmp_name"], getcwd() . "/uploads/" . $name);
+
+        // Generate response.
+        $response = new StdClass;
+        $response->link = "/uploads/" . $name;
+        echo stripslashes(json_encode($response));
+    }
 }
 
 if($action == 'list_image'){
@@ -35,21 +62,30 @@ if($action == 'list_image'){
 
 }
 
-if($action == 'category_detail')
+if($action == 'content_detail')
 {
-    $cateArrays = getSubCategory($id,'','');
+    $condArrays = getContent($content_id,'','','','','','content_id');
     
-    $img1 = empty($cateArrays[$id]["parent_img_1"]) ? 'no_image.png' : $cateArrays[$id]["parent_img_1"];
-    $img1_path = empty($cateArrays[$id]["parent_img_1"]) ? 'img/'.$img1 : 'img/category/'.$id.'/'.$img1;
+    $content_name = empty($condArrays[$content_id]['attr']["content_name"]) ? 'ไม่มีชื่อบทความ' : $condArrays[$content_id]['attr']["content_name"];
+    $content_preface = empty($condArrays[$content_id]['attr']["content_preface"]) ? 'ไม่มีชื่อบทความ' : $condArrays[$content_id]['attr']["content_preface"];
+    $u_name= empty($condArrays[$content_id]['attr']["u_name"]) ? 'ไม่มีชื่อบทความ' : $condArrays[$content_id]['attr']["u_name"];
+    $content_create_date= empty($condArrays[$content_id]['attr']["content_create_date"]) ? 'ไม่มีชื่อบทความ' : $condArrays[$content_id]['attr']["content_create_date"];
+    $content_paragraph1= empty($condArrays[$content_id]['attr']["content_paragraph1"]) ? '' : $condArrays[$content_id]['attr']["content_paragraph1"];
+    $content_paragraph2= empty($condArrays[$content_id]['attr']["content_paragraph2"]) ? '' : $condArrays[$content_id]['attr']["content_paragraph2"];
+    $content_paragraph3= empty($condArrays[$content_id]['attr']["content_paragraph3"]) ? '' : $condArrays[$content_id]['attr']["content_paragraph3"];
+    $content_paragraph4= empty($condArrays[$content_id]['attr']["content_paragraph4"]) ? '' : $condArrays[$content_id]['attr']["content_paragraph4"];
+  
 
-    $html = "<h2 style='display: inline;'><b><u>ข้อมูลหมวดหมู่</u></b></h2>";
-    $html.= "<h3><b>หมวดหมู่:</b>&nbsp;".$cateArrays[$id]['parent_name_th']."</h3>";
-    $html.= "<h3><b>หมวดหมู่ย่อย:</b>&nbsp;".implode(", ", $cateArrays[$id]['sub_cate_name'])."</h3>";
-    $html.= "<h3><b>รายละเอียด:</b>&nbsp;".$cateArrays[$id]['cate_desc']."</h3>";
-    $html.= '<div class="row">';
-    $html.= '<div class="col-xs-12 col-sm-12 col-md-12" align="center" ><img src="'.$img1_path.'" class="img img-responsive"  alt=""></div>';
-    $html.= '</div>';
- 
+    $html = "<h2 style='display: inline;'><b><u>ข้อมูลบทความ</u></b></h2>";
+    $html.= "<h3><b>ชื่อ:</b>&nbsp;<a href='post.php?content_id={$content_id}'>".$content_name.'&nbsp;(คลิ๊กที่นี่เพื่อไปยังบทความ) '."</a>&nbsp;<br><b>เขียนโดย</b>:&nbsp;{$u_name} / {$content_create_date} </h3>";
+    $html.= "<h3><b>บทนำ:</b><br>&nbsp;&nbsp;".$content_preface."</h3>";
+    $html.= "<h3><b>เนื้อหา:</b>&nbsp;";
+    $html.= empty($content_paragraph1) ? '' : '<br>&nbsp;&nbsp;'.$content_paragraph1.'';
+    $html.= empty($content_paragraph2) ? '' : '<br>&nbsp;&nbsp;'.$content_paragraph2.'';
+    $html.= empty($content_paragraph3) ? '' : '<br>&nbsp;&nbsp;'.$content_paragraph3.'';
+    $html.= empty($content_paragraph4) ? '' : '<br>&nbsp;&nbsp;'.$content_paragraph4.'';
+    $html.= "</h3>";
+  
     
     echo $html;
 }

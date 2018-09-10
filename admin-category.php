@@ -26,7 +26,7 @@
                 <div class="col-md-9">
                     <div class="box">
                         <h1>หมวดหมู่&nbsp;&nbsp;
-                        <span onclick="window.location.href='admin-addcategory.php'" class="btn btn-default btn-sm btn-success pull-right" style="margin-top:5px;"><i class="fa fa-pencil"></i> เพิ่ม</span></h1>
+                        <span onclick="window.location.href='admin-addcategory.php'" class="btn btn-default btn-sm btn-success pull-right" style="margin-top:5px;"><i class="fas fa-plus"></i> เพิ่ม</span></h1>
                         <form>
                             <?php
                              
@@ -170,6 +170,7 @@ function call_productModalAction(keyProd){
                 success: function (data, status, xhr) {
                     $('#loadingDiv').hide();
                     var contents = data;
+                    $('#productdetailmodal').find('#productdetailmodalLabel_headerTxt').html('หมวดหมู่');
                     $("#productdetailmodal").find(".modal-body").html(contents);
                     $('#productdetailmodal').modal('show');
                 }

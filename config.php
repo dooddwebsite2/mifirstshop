@@ -337,7 +337,7 @@ function getContent($content_id,$session_id,$comment_id,$content_name,$order_by,
     LEFT JOIN auth_account ON content.content_create_by = auth_account.id
      {$conditionCond}
     ";
-     
+   
     $condArrays = array();
     $resultStr = sendQuery($QueryString);
     if (empty($resultStr)) {

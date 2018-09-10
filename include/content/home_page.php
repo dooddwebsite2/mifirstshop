@@ -18,7 +18,9 @@
 
                     <div id="blog-homepage" class="row">
                         <?php
-                    $QueryString = "SELECT * FROM content ORDER BY content.content_create_date DESC LIMIT 0,3";
+                  
+                        $QueryString = "SELECT * FROM content LEFT JOIN auth_account ON content.content_create_by = auth_account.id ORDER BY content.content_create_date DESC LIMIT 0,3";
+                    
                         $resultStr = sendQuery($QueryString);
                     
 
@@ -37,7 +39,7 @@
                                 $content_img3 = empty($rows['content_img3'])?'-':$rows['content_img3'];
                                 $content_header_level2 = empty($rows['content_header_level2'])?'-':$rows['content_header_level2'];
                                 $content_header_level3 = empty($rows['content_header_level3'])?'-':$rows['content_header_level3'];
-                                $content_create_by = empty($rows['content_create_by'])?'-':$rows['content_create_by'];
+                                $content_create_by = empty($rows['u_name'])?'-':$rows['u_name'];
                                 $content_create_date = empty($rows['content_create_date'])?'-':$rows['content_create_date'];
                                 $comment_count = empty($rows['comment_count'])?'0':$rows['comment_count'];
 

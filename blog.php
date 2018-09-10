@@ -43,12 +43,14 @@
                             $content_count = empty($rowsCount['content_count'])? 0:$rowsCount['content_count'];                
                         }
                         
-                        $QueryString = "SELECT DISTINCT r1.*,( SELECT COUNT(content_comment.comment_id) AS comment_count FROM content_comment WHERE r1.content_id = content_comment.content_id ) AS comment_count FROM 
+                        $QueryString = "SELECT DISTINCT r1.*,auth_account.u_name,( SELECT COUNT(content_comment.comment_id) AS comment_count FROM content_comment WHERE r1.content_id = content_comment.content_id ) AS comment_count FROM 
                         (
                         SELECT * FROM content 
                         ) r1
                         
-                        LEFT JOIN content_comment ON r1.content_id = content_comment.content_id  ORDER BY r1.content_create_date DESC
+                        LEFT JOIN content_comment ON r1.content_id = content_comment.content_id  
+                        LEFT JOIN auth_account ON r1.content_create_by = auth_account.id 
+                        ORDER BY r1.content_create_date DESC
                         ";
                         $resultStr = sendQuery($QueryString);
                     
@@ -68,7 +70,7 @@
                                 $content_img3 = empty($rows['content_img3'])?'-':$rows['content_img3'];
                                 $content_header_level2 = empty($rows['content_header_level2'])?'-':$rows['content_header_level2'];
                                 $content_header_level3 = empty($rows['content_header_level3'])?'-':$rows['content_header_level3'];
-                                $content_create_by = empty($rows['content_create_by'])?'-':$rows['content_create_by'];
+                                $content_create_by = empty($rows['u_name'])?'-':$rows['u_name'];
                                 $content_create_date = empty($rows['content_create_date'])?'-':$rows['content_create_date'];
                                 $comment_count = empty($rows['comment_count'])?'0':$rows['comment_count'];
           

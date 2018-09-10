@@ -16,7 +16,7 @@
                     /* get Category Query */
 
                     $cateArrays = getCategory('',''," CONVERT (cate_name_th USING tis620) ",'');
-        
+                    
                     
                     /* ------------------ */
                 ?>

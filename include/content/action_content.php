@@ -87,6 +87,7 @@
     <input type="hidden" id="subCateId" recieveTxt="" >
 </form>
 
+
 <script>
         var content_id = '<?php echo empty($content_id) || ($content_id == 0) ? 0 : $content_id;?>';
     $(function() {

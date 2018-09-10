@@ -36,7 +36,7 @@
                         $_content_id = isset($_GET['content_id'])? $_GET['content_id'] : 0;
 
                         
-                        $QueryString = "SELECT * FROM content where content_id = {$_content_id}
+                        $QueryString = "SELECT * FROM content  LEFT JOIN auth_account ON auth_account.id = content.content_create_by where content.content_id = {$_content_id}
                         limit 0,1 ";
                         $resultStr = sendQuery($QueryString);
                         while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
@@ -53,7 +53,7 @@
                                 $content_img3 = empty($rows['content_img3'])?'-':$rows['content_img3'];
                                 $content_header_level2 = empty($rows['content_header_level2'])?'-':$rows['content_header_level2'];
                                 $content_header_level3 = empty($rows['content_header_level3'])?'-':$rows['content_header_level3'];
-                                $content_create_by = empty($rows['content_create_by'])?'-':$rows['content_create_by'];
+                                $content_create_by = empty($rows['u_name'])?'-':$rows['u_name'];
                                 $content_create_date = empty($rows['content_create_date'])?'-':$rows['content_create_date'];
                         }   
                         ?>
@@ -178,10 +178,13 @@
                                         <?php
                         $QueryString = "SELECT * FROM content_comment where content_id = {$_content_id}
                       ORDER BY comment_datetime DESC ";
-                        $resultStr = sendQuery($QueryString);
-                
-                        while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
 
+                  
+
+                        $resultStr = sendQuery($QueryString);
+                        
+                        while($rows = mysqli_fetch_array($resultStr,MYSQLI_BOTH)) {
+                                
                         
                         $comment_count = empty($rows['comment_count'])?'0':$rows['comment_count'];
                         $comment_id = empty($rows['comment_id'])?'-':$rows['comment_id'];

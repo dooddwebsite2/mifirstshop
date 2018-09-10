@@ -5,7 +5,9 @@
 <?php include("./include/category/category_variable.php");?>
 <body>
     <?php include("./include/navbar.php");?>
-
+    <style>
+        .dz-image img{width: 100%;height: 100%;}
+    </style>
     <div id="all" class="ThaifontBangnam ContentTxt">
 
         <div id="content">
@@ -31,11 +33,9 @@
 
 </body>
 <script>
-      var session_id = '<?php echo $user_id;?>';
-    $(document).ready(function() {
-  
-    });
-    $("#submits").click(function (e) {
+ var content_id = '<?php echo empty($content_id) || ($content_id == 0) ? 0 : $content_id;?>';
+
+    $("#submits_upd").click(function (e) {
             e.preventDefault();
             var html = $('div#content_paragraph').froalaEditor('html.get');
             var content_name = $('#content_name').val();
@@ -46,21 +46,21 @@
                 type: "POST",
                 url: url,
                 data: {
-                    session_id:session_id,
+               
+                    content_id:content_id,
                     content_name:content_name,
                     content_preface:content_preface,
                     sections: html,
-                    action: "content_add"
+                    action: "content_update"
                 },
                 success: function (data, status, xhr) {
                     $('#loadingDiv').hide();
-                    alert('เพิ่มข้อมูลเสร็จสมบูรณ์');
+                    alert('แก้ไขข้อมูลเสร็จสมบูรณ์');
                     window.location.href = "admin-section.php?";
                 }
             });
-
-         
     });
+
 </script>
 
 </html>

@@ -13,7 +13,9 @@ $subArrays=empty($_POST["subArrays"])? "":$_POST["subArrays"];
 $sub_cate_id=isset($_POST["sub_cate_id"])?$_POST["sub_cate_id"]:"";
 $content_id=isset($_POST["content_id"])?$_POST["content_id"]:"";
 
-
+$content_name=isset($_POST["content_name"])?$_POST["content_name"]:"";
+$content_preface=isset($_POST["content_preface"])?$_POST["content_preface"]:"";
+$sections=isset($_POST["sections"])?$_POST["sections"]:"";
 
 if(!empty($_FILES)){
     $allowedExts = array("gif", "jpeg", "jpg", "png");
@@ -90,55 +92,29 @@ if($action == 'content_detail')
     echo $html;
 }
 
-if($action == 'category_add')
+if($action == 'content_add')
 {
-    //echo $session_id;
-    $target_img_path = returnPath('tmp_category',$session_id,'','only_id');
-   
-    $folders = glob("{$target_img_path}*", GLOB_BRACE);
-    $date_now = date("Y-m-d H:i:s");
-    $time_stamp = getTimeStamp('',$date_now);
-    $fol_tmp = '';$fol_tmps = '';
-    foreach($folders as $_fol => $_folpath) {
-        $fol_tmp =  $_folpath ?  explode("__",$_folpath) : '';
-        $fol_tmps = ($fol_tmp[1] > $fol_tmps) ?  $fol_tmp[1] : $fol_tmps;
-    }
- 
-    $search_keys = empty($folders)? 0 :  array_search($target_img_path.$fol_tmps,$folders);
-    // move all find to directory
-    $files = glob("{$folders[$search_keys]}{$ds}*.*", GLOB_BRACE);
+  $date_now = date("Y-m-d H:i:s");
+   $sql = "INSERT INTO content(content_name,content_preface,content_paragraph1
+   ,content_create_by,content_create_date)
+   VALUES ('{$content_name}', '{$content_preface}', '{$sections}','{$session_id}'
+   ,'{$date_now}');";
+   executeQuery($sql);
 
-    $files_name = array();
-    if(count($files) > 0){
-        // ด้านล่างวนลูปเอาชื่อไฟล์ใส่ใน array
-        foreach($files as $_original_file => $_original_file_value){ 
-            $files_name[] =  basename($_original_file_value); 
-        } 
-       
-        $sql = "INSERT INTO category(cate_name_th,cate_create_date,cate_desc
-        ,create_by,cate_img_1,cate_active)
-        VALUES ('{$category}', '{$date_now}', '{$cate_desc}','{$session_id}'
-        ,'{$files_name[0]}',1);";
-        executeQuery($sql);
+}
+if($action == 'content_update')
+{
+  $date_now = date("Y-m-d H:i:s");
+  $sql ="UPDATE content SET content_name = '{$content_name}', content_preface = '{$content_preface}', content_paragraph1='{$sections}'
+  WHERE content_id = {$content_id};";
+  executeQuery($sql);
 
-        $cateArrays = getCategory($cate_id,'',' cate_create_date DESC ',' 1');
-
-        foreach($cateArrays as $_k => $v){
-            $cate_id = $cateArrays[$_k]['cate_id'];
-        }
-
-        $target_prod_path = returnPath('category','',$cate_id,'');
-              
-        foreach($subArrays as $_k => $_v){
-            $sqls = " INSERT INTO sub_category(cate_id,sub_cate_name_th) 
-            VALUES ('{$cate_id}','".$_v."');";
-            executeQuery($sqls);
-        }
-        foreach($files as $_original_file => $_original_file_value){ 
-            rename($_original_file_value, $target_prod_path.basename($_original_file_value));
-        } 
-        
-    }
+}
+if($action == 'content_delete'){
+    $_QUERYARRAYS =  array();
+    $_QUERYARRAYS[] = "DELETE FROM content WHERE content_id = {$content_id}";
+    $_QUERYARRAYS[] = "DELETE FROM content_comment WHERE content_id = {$content_id}";
+    DELETE_STRUCTURE($_QUERYARRAYS);
 }
 if($action == 'category_search_prod')
 {

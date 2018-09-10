@@ -16,6 +16,7 @@
         // echo '<PRE>';
         
         // print_R($condArrays);
+
     }
     ?>    
     <div class="col-md-9">
@@ -39,11 +40,12 @@
                 </div>
                
             </div>
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="content_preface">* บทนำ</label>
-                        <textarea id="content_preface" class="form-control" rows="4"></textarea>
+                        <textarea id="content_preface" class="form-control" rows="8"><?php echo (!empty($condArrays) && isset($_GET['content_id'])) ?  $condArrays[$content_id]['attr']['content_preface']: '';?></textarea>
                     </div>
                 </div>
                
@@ -77,6 +79,7 @@
                 <?php
                   }
                 ?>
+                
                 </div>
             </div>
         </div>
@@ -84,31 +87,30 @@
     <input type="hidden" id="subCateId" recieveTxt="" >
 </form>
 
-
 <script>
-       
+        var content_id = '<?php echo empty($content_id) || ($content_id == 0) ? 0 : $content_id;?>';
     $(function() {
- 
+       
         $('div#content_paragraph').froalaEditor({
         height: 600,
+        placeholderText: '',
+
+        // Set the image upload URL.
+        imageUploadURL: 'upload_img.php',
+
+        imageUploadParams: {
+        id: 'my_editor'
+        },
         quickInsertButtons: ['image', 'table'],
         toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertTable', '|', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo']
             
         })
-        // .on('froalaEditor.file.beforeUpload', function (e, editor, files) {
-        // // Return false if you want to stop the file upload.
-        // })
-        // .on('froalaEditor.file.uploaded', function (e, editor, response) {
-        // // File was uploaded to the server.
-        // })
-        // .on('froalaEditor.file.inserted', function (e, editor, $file, response) {
-        // // File was inserted in the editor.
-        // })
-       
+        
+        if(content_id > 0){
+            var html = <?php echo isset($condArrays[$content_id]['attr']['content_paragraph1']) ? json_encode($condArrays[$content_id]['attr']['content_paragraph1']) : json_encode('') ;?>;
+            //console.log(html);
+            $('div#content_paragraph .fr-element').html(html);
+        }
     });
-    
-    $("#submits").click(function (e) {
-           console.log($('div#content_paragraph').froalaEditor('html.get'));
-            
-    });
+ 
 </script>

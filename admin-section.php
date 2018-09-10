@@ -83,7 +83,7 @@
                                                 </a></td>
                                                 <td  align="center"><a href="#" onClick="call_contentModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด" > <?php echo $condArrays[$condProd]['attr']['u_name'];?></a></td>
                                                 <td align="center"><a href="#" onClick="call_contentModalAction(<?php echo $condProd;?>)"   title="คลิ๊กเพื่อดูรายละเอียด"><?php echo isset($condArrays[$condProd]['child'])? count($condArrays[$condProd]['child']) : '0';?></a></td>
-                                                <td  align="left"><a href="admin-updcategory.php?cate_id=<?php echo $condProd;?>"  >แก้ไข</a>/<span class="actions"  onClick="call_delCategory(<?php echo $condProd;?>)">ลบ</span></td>
+                                                <td  align="left"><a href="admin-updsection.php?content_id=<?php echo $condProd;?>"  >แก้ไข</a>/<span class="actions"  onClick="call_delContent(<?php echo $condProd;?>)">ลบ</span></td>
                                             
                                                  </tr>
                                             <?php
@@ -116,7 +116,6 @@
 <!-- <textarea id="froala-editor">Initialize the Froala WYSIWYG HTML Editor on a textarea.</textarea> -->
 
 
-
 <script>
 $(document).ready( function () {
     // $('textarea#froala-editor').froalaEditor();
@@ -139,32 +138,20 @@ $(document).ready( function () {
 } );
 
 
-function call_delCategory(condProd){
+function call_delContent(condProd){
     $('#loadingDiv').show();
-        var url = './include/ajax/category_form_upd.php';
+    var url = './include/ajax/content_form.php';
         $.ajax({
             type: "POST",
             url: url,
             data: {
-                cate_id: condProd,
-                action: "category_delete"
+                content_id: condProd,
+                action: "content_delete"
             },
             success: function (data, status, xhr) {
                 $('#loadingDiv').hide();
-                var jsonArraysList = JSON.parse(xhr.responseText);
-                var html = 'สินค้ามีการผูกอยู่กับหมวดหมู่นี้อยู่ ลบไม่ได้ ต้องไปแก้ความสัมพันธ์สินค้าดังกล่าวก่อน' + "\n";
-                var count=0;
-                if(jsonArraysList.status == true){
-                    $.each(jsonArraysList.prodArrays, function($_prodKeys, $_prodVal)
-                    {
-                        ++ count;
-                        html += count + ". " + $_prodVal.product_name + "\n";
-                    });
-                    alert(html);
-                }else{
-                   alert('ลบข้อมูลเสร็จสมบูรณ์');
-                   window.location.href = "admin-category.php?";
-                }
+                alert('ลบข้อมูลเสร็จสมบูรณ์');
+                window.location.href = "admin-section.php?";
             }
         });
 }

@@ -18,17 +18,17 @@
 ?>
                 <div class="col-md-9">
                     <div class="box">
-                        <h1>My account</h1>
-                        <p class="lead">Change your personal details or your password here.</p>
-                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <h1>บัญชีผู้ใช้</h1>
+                        <p class="lead">แก้ไขรหัสผ่านที่นี่.</p>
+                        <p class="text-muted">รหัสผ่านจะต้องมีความยาวไม่น้อยกว่า4ตัวอักษร ไม่อนุญาติให้มีช่องว่างและอักขระพิเศษจำพวก / ( ) , \ ก-ฮ ๑-๙</p>
 
-                        <h3>Change password</h3>
+                        <h3>เปลี่ยนรหัสผ่าน</h3>
 
                         <form>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="password_old">Old password</label>
+                                        <label for="password_old">*&nbsp;รหัสเก่า</label>
                                         <input type="password" class="form-control" id="password_old">
                                     </div>
                                 </div>
@@ -36,13 +36,13 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="password_1">New password</label>
+                                        <label for="password_1">*&nbsp;รหัสใหม่</label>
                                         <input type="password" class="form-control" id="password_1">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="password_2">Retype new password</label>
+                                        <label for="password_2">*&nbsp;กรอกรหัสใหม่อีกครั้ง</label>
                                         <input type="password" class="form-control" id="password_2">
                                     </div>
                                 </div>
@@ -50,8 +50,8 @@
                             <!-- /.row -->
 
                             <div class="col-sm-12 text-center">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-save"></i> Save new password</button>
+                                <span  class="btn btn-primary" onclick="register_pwdChk()">
+                                    <i class="fa fa-save"></i>บันทึกรหัสผ่าน</span>
                             </div>
                         </form>
 
@@ -73,5 +73,8 @@
 
 
 </body>
+<script>
 
+
+</script>
 </html>

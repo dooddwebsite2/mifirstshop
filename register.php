@@ -51,7 +51,7 @@
                                 <input type="text" class="form-control" id="email">
                             </div>
                             <div class="form-group">
-                                <label for="password">รหัสผ่าน*</label>
+                                <label for="password">รหัสผ่าน (รหัสผ่านจะต้องมีความยาวไม่น้อยกว่า4ตัวอักษร ไม่อนุญาติให้มีช่องว่างและอักขระพิเศษจำพวก / ( ) , \ ก-ฮ ๑-๙)*</label>
                                 <input type="password" class="form-control" id="password">
                             </div>
                             <div class="text-center checkbox">

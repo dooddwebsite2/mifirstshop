@@ -41,6 +41,27 @@
 
 
     </ul>
+    
+</div>
+
 
 </div>
+
+<!-- WEB BANNER !-->
+<div class="banner">
+    <a href="#">
+        <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
+    </a>
+</div>
+
+<div class="banner">
+    <a href="#">
+        <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
+    </a>
+</div>
+
+<div class="banner">
+    <a href="#">
+        <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
+    </a>
 </div>

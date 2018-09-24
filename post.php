@@ -280,7 +280,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
-                                            <span class="btn btn-primary" onclick="sendRequest();">
+                                            <span class="btn btn-primary" onclick="sendRequests();">
                                                 <i class="fa fa-comment-o"></i> โพสต์ข้อความ</span>
                                         </div>
                                     </div>
@@ -319,7 +319,7 @@
         }
 
 
-        function sendRequest() {
+        function sendRequests() {
 
             var name = $('#name').val();
             var email = $('#email').val();

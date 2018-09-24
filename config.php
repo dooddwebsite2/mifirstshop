@@ -388,6 +388,7 @@ function LoginFunc($user_id,$user_name,$user_pwd) {
     JOIN auth_role ON auth_account.role_id = auth_role.role_id  WHERE u_active = 1 
     {$conditionProd}
     ";
+
     // echo $QueryString;
     // exit;
     $profileArrays = array();

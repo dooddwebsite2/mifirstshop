@@ -11,6 +11,7 @@ if($action == 'login_request')
     $status = false;
     $msg = "";
     $profileArrays = LoginFunc('',$user_modal,$password_modal);
+  
     if(count($profileArrays) > 0 ) { 
         $status = true;
         $_SESSION['start'] = time(); // เก็บเวลาปัจจุบัน

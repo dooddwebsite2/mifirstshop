@@ -11,8 +11,15 @@
                 <?php if(empty($_SESSION['user_id'])){ ?>
                 <li><a href="#"  data-toggle="modal" data-target="#login-modal">เข้าสู่ระบบ</a></li>
                 <?php } ?>
-                <?php if(!empty($_SESSION['user_id'])){ ?>
-                <li><a href="customer-account.php" >จัดการข้อมูล</a></li>
+                <?php if(!empty($_SESSION['user_id'])){
+                    $u_id = deCodeMD5_ONETABLE($_SESSION['user_id'],'id','auth_account');
+                    $profileArr = LoginFunc($u_id,'','');
+                    $firstKeyProd = empty($u_id) ? '' : array_keys($profileArr)[0];
+                    $user_name = empty($firstKeyProd) ? '' : $profileArr[$firstKeyProd]['u_name'];
+
+                    
+                    ?>
+                <li><a href="customer-account.php" >จัดการข้อมูล <?php echo $user_name;?></a></li>
                 <?php } ?>
                 <?php if(empty($_SESSION['user_id'])){ ?>
                 <li><a href="register.php">สมัครสมาชิก</a>

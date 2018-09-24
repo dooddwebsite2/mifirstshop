@@ -37,9 +37,11 @@
         }
     });
 
-    function sendRequest() {
-        var user_modal = $('#user-modal').val();
-        var password_modal = $('#password-modal').val();   
+    function sendRequest(u_name,u_pass) {
+
+        var user_modal = u_name != '' && u_name != null ? u_name : $('#user-modal').val();
+        var password_modal = u_pass != '' & u_pass != null ? u_pass : $('#password-modal').val();   
+        if(user_modal != '' && password_modal != ''){
         $('#loadingDiv').show();
         var url = './include/ajax/login_form.php';
         $.ajax({
@@ -51,7 +53,7 @@
                 action: "login_request"
             },
             success: function (data, status, xhr) {
-            
+         
                 $('#loadingDiv').hide();
                 var hashKeys;
                 var jsonData = JSON.parse(xhr.responseText);
@@ -73,6 +75,10 @@
 
             }
         });
+        }
+        else{
+            alert('กรุณาตรวจสอบข้อมูล');
+        }
 
     }
 </script>

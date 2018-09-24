@@ -28,17 +28,22 @@
                     <div class="box">
                         <h1>สมัครสมาชิก</h1>
 
-                        <p class="lead"></p>
-                        <p>เงื่อนไขการสมัครสมาชิก
-                            <br>1.ลูกค้าแจ้งคืนสินค้าได้ในกรณีที่สินค้าเกิดการชำรุด
+                       
+                        <p class="lead" id="regis_condition"><u><b>เงื่อนไขการสมัครสมาชิก</b></u>
+                         
                         </p>
+                        <p class="lead">1.ลูกค้าแจ้งคืนสินค้าและขอเงินคืนได้ในกรณีที่สินค้าเกิดการชำรุดระยะเวลาไม่เกิน7วันหลังได้รับสินค้า
+                            <br>2.ลูกค้าไม่สามารถเปลี่ยนหรือขอเงินคืนได้ในกรณีที่สินค้าเกิดตำหนิหลังจากได้รับสินค้า(เช็คตำหนิก่อนส่ง)
+                            <br>3.หากจงใจกระทำทุจริตอันใดที่ส่งผลต่อภาพลักษณ์ของแบรนด์หรือสินค้าโดยจงใจและไม่มีเหตุสมควรจะถูกดำเนินคดีและแบนบัญชีผู้ใช้ทันที
+                            <br>4.หากโพสต์ถ้อยคำและข้อความที่หยาบคายที่ส่งผลต่อการรำคาญของผู้อื่น หากพบเห็นจะถูกแบนบัญชีผู้ใช้ทันทีโดยไม่มีการแจ้งเตือน
+                            <br>5.เมื่อลูกค้าโอนเงินหากจะยกเลิกรายการสั่งซื้อสามารถยกเลิกได้ก่อนระยะเวลาไม่เกิน1วันหลังการสั่งซื้อ</p>
                         <p class="text-muted">ถ้ามีปัญหาหรือคำถามอะไรสามารถติดต่อเราได้ที่ <a href="contact.php"> คลิ๊กที่นี่ !!</a></p>
 
                         <hr>
 
                         <form action="customer-orders.html" method="post">
                             <div class="form-group">
-                                <label for="name">ชื่อ*</label>
+                                <label for="name">ชื่อผู้ใช้งาน*</label>
                                 <input type="text" class="form-control" id="name">
                             </div>
                             <div class="form-group">
@@ -49,8 +54,14 @@
                                 <label for="password">รหัสผ่าน*</label>
                                 <input type="password" class="form-control" id="password">
                             </div>
+                            <div class="text-center checkbox">
+                                <label>
+                                <input id="chkBox_cond" type="checkbox" onchange="checkboxFunc(this)"> ฉันได้อ่านและเข้าใจข้อตกลงของ&nbsp;Mifirst Shop 
+                                </label>&nbsp;<a href="#" onclick="slideTo('regis_condition','up');">ข้อตกลงและเงื่อนไข.</a>
+                            </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> สมัครสมาชิก</button>
+                                <span id="regisButton" onclick="registerFunc()" class="btn btn-primary" style="cursor:pointer;"><i class="fa fa-user-md"></i>&nbsp;สมัครสมาชิก</span>
+                        
                             </div>
                         </form>
                     </div>
@@ -60,17 +71,17 @@
                 <div class="col-md-3">
                     <div class="banner">
                         <a href="#">
-                            <img src="img/banner.jpg" alt="sales 2014" class="img-responsive">
+                            <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
                         </a>
                     </div>
                     <div class="banner">
                         <a href="#">
-                            <img src="img/banner.jpg" alt="sales 2014" class="img-responsive">
+                            <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
                         </a>
                     </div>
                     <div class="banner">
                         <a href="#">
-                            <img src="img/banner.jpg" alt="sales 2014" class="img-responsive">
+                            <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
                         </a>
                     </div>
                 </div>
@@ -93,5 +104,49 @@
 
 
 </body>
+
+<script>
+var condCheck = false;
+$(document).ready(function() {
+
+    checkboxFunc();
+    
+});
+function checkboxFunc(chkBox){
+        $("#regisButton").css("pointer-events", $('#chkBox_cond').prop('checked') ? "auto" : "none");
+    }
+ function slideTo(body,type) {
+    // alert('555');
+ }
+ function registerFunc(){
+     var name = $('#name').val();
+     var email = $('#email').val();
+     var password = $('#password').val();
+     if((name != '' && name.length != 0 ) && (email != '' & email.length != 0 ) && (password != '' & password.length != 0)){
+        var url = './include/ajax/register_form.php';    
+                    $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {name:name,email:email,password:password,action:"insert_profiles"},
+                    success: function(data,status,xhr){
+                        var jsonStatus = JSON.parse(xhr.responseText);
+                        if(jsonStatus.status  == false){
+                            alert("ตรวจพบผู้ใช้งาน " + name + " มีอยู่แล้วในระบบ");
+                        }
+                        else{
+                            alert('สมัครสมาชิกเสร็จสมบูรณ์');
+                            sendRequest(name,password);
+                            
+                        }
+                    }
+        });
+     }
+     else{
+         alert('กรุณาตรวจสอบข้อมูล');
+     }
+ 
+
+ }
+</script>
 
 </html>

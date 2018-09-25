@@ -223,29 +223,11 @@
 
         <!-- *** FOOTER END *** -->
 
-
-
-
         <!-- *** COPYRIGHT ***
  _________________________________________________________ -->
         <?php  include("./include/copyright.php");?>
         <!-- *** COPYRIGHT END *** -->
-
-
-
     </div>
     <!-- /#all -->
-
-
-
-
-
-
-
-
-
-
-
 </body>
-
 </html>

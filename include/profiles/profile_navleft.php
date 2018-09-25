@@ -57,7 +57,7 @@
                         <i class="fa fa-book"></i>บทความ</a>
                 </li>
                 <li>
-                    <a href="customer-account.php">
+                    <a href="customer-admin.php">
                         <i class="fa fa-user"></i>บัญชีลูกค้า</a>
                 </li>
 
@@ -79,7 +79,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li class="">
                     <a href="customer-account.php">
-                        <i class="fa fa-user"></i>ข้อมูลส่วนตัว</a>
+                        <i class="fa fa-user"></i>บัญชีผู้ใช้</a>
                 </li>
 
                 <li>

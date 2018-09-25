@@ -114,7 +114,7 @@ $(document).ready(function() {
 });
 function checkboxFunc(chkBox){
         $("#regisButton").css("pointer-events", $('#chkBox_cond').prop('checked') ? "auto" : "none");
-    }
+}
  function slideTo(body,type) {
     // alert('555');
  }

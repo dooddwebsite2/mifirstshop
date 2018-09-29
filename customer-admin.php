@@ -21,37 +21,52 @@
                         <h1>บัญชีลูกค้า</h1>
                         <p class="lead">แบนลูกค้า,ลบบัญชีทิ้ง,ตรวจสอบประวัติการสั่งซื้อ คร่าวๆ</p>
                         <p class="text-muted">เมื่อแบนจะสามารถกลับมาใช้ใหม่ได้เมื่อเราปลดแบน ไม่สามารถเลือกแบนโดยตั้งเวลาได้<br>**แต่ถ้าเราลบทิ้งจะหายไปถาวรไม่สามารถกู้คืนได้ (แก้ไขสิทธิ์ role ต้องไปแก้ในฐานข้อมูลเอา TABLE auth_account เอา)</p>
-
-                        <h3>เปลี่ยนรหัสผ่าน</h3>
-
+                    
                         <form>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="password_old">*&nbsp;รหัสเก่า</label>
-                                        <input type="password" class="form-control" id="password_old">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="password_1">*&nbsp;รหัสใหม่</label>
-                                        <input type="password" class="form-control" id="password_1">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="password_2">*&nbsp;กรอกรหัสใหม่อีกครั้ง</label>
-                                        <input type="password" class="form-control" id="password_2">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="col-sm-12 text-center">
-                                <span   class="btn btn-primary" onclick="register_pwdChk()">
-                                    <i class="fa fa-save"></i>&nbsp;บันทึกรหัสผ่าน</span>
+                        <div class="table-responsive">
+                                <table id="table_product" class="table table-striped table-hover dt-responsive display nowrap"   cellspacing="0" style="width:100%" >
+                                       
+                                <thead>
+                                            <tr>
+                                            <?php
+                                            
+                                            ?>
+                                                <th    style="text-align: center;">ชื่อผู้ใช้</th>
+                                                <th style="text-align: center;">บทบาท</th>
+                                                <th   style="text-align: center;">ประวัติการสั่งซื้อ</th>
+                                                <th  style="text-align: center;" >แบนบัญชีผู้ใช้</th>
+                                                <th   style="text-align: center;">ลบบัญชีผู้ใช้ถาวร</th>
+                                             
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          
+                                        <?php
+                                            $auth_account = LoginFunc('','','','');
+                                            unset($auth_account[$user_id]);
+                                          
+                                            foreach($auth_account as $_keys => $_value){
+                                        ?>
+                                            <tr>
+                                            <?php                                    
+                                            ?>
+        
+                                                <td  align="left"><?php echo $auth_account[$_keys]['u_name'] ? $auth_account[$_keys]['u_name']: "";?></td>
+                                                <td align="left"><?php echo $roles[$auth_account[$_keys]['role_id'] - 1];?></td>
+                                                <td  align="center"><a href="#" onclick="view_action(<?php echo $_keys;?>)">ดูรายละเอียด</a></td>
+                                                <td  align="center"><a  href="#" onclick="ban_action(<?php echo $_keys;?>,<?php echo $auth_account[$_keys]['u_active'];?>)" >
+                                                    <?php echo $auth_account[$_keys]['u_active'] > 0 ? "แบน":"ปลดแบน"?>
+                                            </a>
+                                                </td>
+                                                <td  align="center"><a href="#" onclick="delete_action(<?php echo $_keys;?>)">ลบ</a></td>
+                                            
+                                            </tr>
+                                        <?php
+                                            }
+                                        ?>
+                                          
+                                        </tbody>
+                                </table>
                             </div>
                         </form>
 
@@ -80,74 +95,76 @@
 ?>
 
 <?php
-$profileArrays = LoginFunc($user_id,'','');
+$profileArrays = LoginFunc($user_id,'','','');
 ?>
 <script>
-var u_pass = '<?php echo $profileArrays[$user_id]['u_pass'] ?>';
-var user_id = '<?php echo $user_id;?>';
+$(document).ready( function () {
+    
+    $('#table_product').DataTable( {
+      responsive: true,
+        "columnDefs": [
+            
+            { "width": "30%", "targets": 0 },
+            { "width": "30%", "targets": 1  },
+            { "width": "30%", "targets": 2 },
 
-var MD5 = function(d){result = M(V(Y(X(d),8*d.length)));return result.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_}
+            { "width": "10%", "targets": 3 ,"orderable": false },
 
-$(document).ready(function() {
+        ],
 
-});
-function register_pwdChk(){
-        var password_old = $('#password_old').val();
-        var password_1 = $('#password_1').val();
-        var password_2 = $('#password_2').val(); 
-        var hashOld = password_old != '' ? hashKey(password_old) : 0;
+    } );
 
-        var verify_oldpass = verify_password(hashOld,u_pass,'รหัสผ่านเก่าไม่ตรงกันกับรหัสผ่านปัจจุบัน');
-        var verify_newpass = verify_password(password_1,password_2,'รหัสผ่านที่ตั้งใหม่ไม่ตรงกัน');
-        var verify_arr = [password_old,password_1,password_2];
-        var verify_emptys = verify_empty(verify_arr);
-        if( verify_oldpass == true && verify_emptys == true && verify_newpass == true){     
-            var url = './include/ajax/register_form.php';    
+    
+
+} );
+function view_action(id){
+    alert(id);
+}
+function delete_action(id){
+    var del_butt = confirm("ยืนยันจะลบบัญชีนี้ใช่ไหม ?");
+    if (del_butt == true) {
+        var url = './include/ajax/register_form.php';    
                     $.ajax({
                     type: "POST",
                     url: url,
-                    data: {user_id:user_id,password:password_1,action:"update_password"},
+                    data: {user_id:id,action:"delete_user"},
                     success: function(data,status,xhr){
                         var jsonStatus = JSON.parse(xhr.responseText);
                         if(jsonStatus.status  == false){
-                            alert("ไม่สามารถแก้ไขรหัสผ่านได้");
+                            alert("ไม่สามารถลบบัญชีผู้ใช้นี้ได้");
                         }
                         else{
-                            window.location.href = "customer-account.php";alert("แก้ไขเสร็จสมบูรณ์");
+                            window.location.href = "customer-admin.php";alert("ดำเนินการเสร็จสมบูรณ์");
                         }
-                    }
-            });
-          }
-}
-function hashKey(keys){
-    keys = MD5(keys);
-    return keys;
-}
-function verify_empty($arr){
-    $arr = $arr.length > 0 ? true : false;
-    if($arr == true){
-        for(var i = 0; i < $arr.length; i++) 
-        {
-            if($arr[i] == 'undefined' || $arr[i] == '')
-            {
-                return false;
-            }
-        }
+                }
+        });
+    } else {
+        console.log('cancle');
     }
-    else{
-        return false;
+}
+function ban_action(id,status){
+    var ban_butt = confirm("ยืนยันจะแบนบัญชีนี้ใช่ไหม ?");
+    if (ban_butt == true) {
+        var url = './include/ajax/register_form.php';    
+                    $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {user_id:id,status:status,action:"ban_user"},
+                    success: function(data,status,xhr){
+                        var jsonStatus = JSON.parse(xhr.responseText);
+                        if(jsonStatus.status  == false){
+                            alert("ไม่สามารถแบนบัญชีผู้ใช้นี้ได้");
+                        }
+                        else{
+                            window.location.href = "customer-admin.php";alert("ดำเนินการเสร็จสมบูรณ์");
+                        }
+                }
+        });
+    } else {
+        console.log('cancle');
     }
-    return true;
+}
 
-}
-function verify_password($var1,$var2,$msg){
-    if($var1 != $var2){
-        alert($msg);
-        return false;
-    }
-    return true;
-
-}
 </script>
 </html>
 

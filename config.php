@@ -10,7 +10,7 @@
 
 /* db config */
 $img_blog = $_SERVER["DOCUMENT_ROOT"]."/img/blog/";
-
+$roles = array("ผู้ดูแลระบบ","ผู้ใช้ธรรมดา");
 
 /* set date */
 date_default_timezone_set("Asia/Bangkok");
@@ -358,6 +358,42 @@ function getContent($content_id,$session_id,$comment_id,$content_name,$order_by,
 }
 
 
+/* GET account_rel_product */
+function get_account_rel_product($auth_account_id,$product_id,$create_date,$role_id,$order_by,$limit,$fields){
+    $conditionCond = " WHERE 1=1 ";
+    $conditionCond .= ($auth_account_id == 0 ) ? '' : " AND account_rel_product.auth_account_id = {$auth_account_id} ";
+    $conditionCond .= empty($product_id) ? '' : " AND account_rel_product.product_id = {$product_id} ";
+    $conditionCond .= empty($create_date) ? '' : " AND account_rel_product.create_date = '{$create_date}' ";
+    $conditionCond .= empty($role_id) ? '' : " AND auth_account.role_id = '{$role_id}' ";
+    $conditionCond .= empty($order_by) ? '' : " ORDER BY {$order_by} ";
+    $conditionCond .= empty($limit) ? '' : " LIMIT {$limit} ";
+ 
+    $QueryString = "SELECT * FROM auth_account 
+    INNER JOIN account_rel_product ON auth_account.id = account_rel_product.auth_account_id 
+    INNER JOIN product ON account_rel_product.product_id = product.product_id 
+     {$conditionCond}
+    ";
+   
+    $condArrays = array();
+    $resultStr = sendQuery($QueryString);
+    if (empty($resultStr)) {
+        return $condArrays;
+    }
+    $fields = empty($fields) ? 'id' : $fields;
+    while($rows = $resultStr->fetch_assoc()){
+        $condArrays[$rows[$fields]]['attr'] = $rows;
+        if(!is_null($rows['product_id'])){
+            $condArrays[$rows[$fields]]['child'][] = empty($rows['product_id']) ? '' : $rows;
+        }
+    }
+
+
+    
+    return $condArrays;
+
+}
+
+
 
 function deCodeMD5($str)
 {
@@ -380,12 +416,13 @@ function deCodeMD5($str)
 
 
 /* LOGIN FUNCTION */
-function LoginFunc($user_id,$user_name,$user_pwd) {
+function LoginFunc($user_id,$user_name,$user_pwd,$u_active) {
     $conditionProd = ($user_id == 0 ) || empty($user_id) ? '' : "AND auth_account.id= {$user_id} ";
     $conditionProd .= empty($user_name)  ? '' : "AND auth_account.u_name = '{$user_name}' ";
     $conditionProd .= empty($user_pwd)  ? '' : " AND auth_account.u_pass = md5('{$user_pwd}') ";
+    $conditionProd .= empty($u_active)  ? '' : " AND auth_account.u_active = 1 ";
     $QueryString = "SELECT * FROM auth_account 
-    JOIN auth_role ON auth_account.role_id = auth_role.role_id  WHERE u_active = 1 
+    JOIN auth_role ON auth_account.role_id = auth_role.role_id  WHERE 1 = 1 
     {$conditionProd}
     ";
 
@@ -410,6 +447,7 @@ function LoginFunc($user_id,$user_name,$user_pwd) {
         $profileArrays[$rows['id']]['first_name'] =  empty($rows['first_name'])?'':$rows['first_name'];
         $profileArrays[$rows['id']]['last_name'] =  empty($rows['last_name'])?'':$rows['last_name'];
         $profileArrays[$rows['id']]['role_id'] =  empty($rows['role_id'])?'':$rows['role_id'];
+        $profileArrays[$rows['id']]['u_active'] =  empty($rows['u_active'])?'':$rows['u_active'];
     
     
     } 

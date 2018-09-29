@@ -15,7 +15,12 @@
             <li class="<?php if(!empty($cate_id) && empty($sub_cate_active)) echo 'active';?>">
                 <a href="category.php?cate_id=<?php echo $parent_id;?>">
                     <?php echo $cate_Arr[$parent_id]['parent_name_th'];?>
-                    <span class="badge pull-right">42</span>
+                    <?php
+                    $count_parent_category = count(getProduct_withCategory('', $parent_id,'' ,'','','','','')) > 0 ? count(getProduct_withCategory('', $parent_id,'' ,'','','','','')) : 0 ;
+                    
+
+                    ?>
+                    <span class="badge pull-right"><?php echo $count_parent_category;?></span>
                 </a>
                 <ul>
                     <?php
@@ -65,3 +70,4 @@
         <img src="img/banner1.jpg" alt="sales 2014" class="img-responsive">
     </a>
 </div>
+

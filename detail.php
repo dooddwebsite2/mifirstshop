@@ -5,10 +5,15 @@
 
 
 <body>
-
+    <style>
+    a.disabled {
+        /*pointer-events: none;*/
+        /*cursor: default;*/
+    }
+    </style>
     <?php include("./include/navbar.php");?>
     <?php include("./include/category/category_variable.php");?>
-    <div id="all">
+    <div id="all" class="ThaifontBangnam ContentTxt">
 
         <div id="content">
             <div class="container">
@@ -27,38 +32,51 @@
  _________________________________________________________ -->
                     <?php include("./include/category/category_navleft.php");?>
                 </div>
+                <?php
+                
+                $u_id = !empty($_SESSION['user_id']) ?  deCodeMD5_ONETABLE($_SESSION['user_id'],'id','auth_account') : 0;
 
-                <div class="col-md-9">
+                
+                if($_GET['product_id']){
+                    $product_id = $_GET['product_id'];
+                    
+                    $account_prod_count = count(get_account_rel_product($u_id,$product_id,'','','','','')) > 0 ? count(get_account_rel_product($u_id,$product_id,'','','','','')) : 0;
+                    $prodArrays = getProduct($product_id,' product_create_date DESC',1,'','');
+                    $img1 = empty($prodArrays[$product_id]["product_img1"]) ? 'no_image.png' : $prodArrays[$product_id]["product_img1"];
+                    $img1_path = empty($prodArrays[$product_id]["product_img1"]) ? 'img/'.$img1 : 'img/product/'.$product_id.'/'.$img1;
+
+                    $img2 = empty($prodArrays[$product_id]["product_img2"]) ? 'no_image.png' : $prodArrays[$product_id]["product_img2"];
+                    $img2_path = empty($prodArrays[$product_id]["product_img2"]) ? 'img/'.$img2 : 'img/product/'.$product_id.'/'.$img2;
+
+                    $img3 = empty($prodArrays[$product_id]["product_img3"]) ? 'no_image.png' : $prodArrays[$product_id]["product_img3"];
+                    $img3_path = empty($prodArrays[$product_id]["product_img3"]) ? 'img/'.$img3 : 'img/product/'.$product_id.'/'.$img3;
+
+                    $img4 = empty($prodArrays[$product_id]["product_img4"]) ? 'no_image.png' : $prodArrays[$product_id]["product_img4"];
+                    $img4_path = empty($prodArrays[$product_id]["product_img4"]) ? 'img/'.$img4 : 'img/product/'.$product_id.'/'.$img4;
+                  
+                }
+                ?>
+                <div class="col-md-9 ">
 
                     <div class="row" id="productMain">
                         <div class="col-sm-6">
-                            <div id="mainImage">
-                                <img src="img/detailbig1.jpg" alt="" class="img-responsive">
+                            <div id="mainImage" align="center">
+                                <img src="<?php echo $img1_path;?>" alt="" class="img-responsive">
                             </div>
 
-                            <div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon -->
-
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon -->
+                        
 
                         </div>
                         <div class="col-sm-6">
                             <div class="box">
-                                <h1 class="text-center">White Blouse Armani</h1>
-                                <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material & care and sizing</a>
+                                <h1 class="text-center"><?php echo $prodArrays[$product_id]['product_name'];?></h1>
+                                <p class="goToDescription"><a href="#details" class="scroll-to">คลิ๊กเพื่อดูรายละเอียดสินค้า</a>
                                 </p>
-                                <p class="price">$124.00</p>
+                                <p class="price"><?php echo $prodArrays[$product_id]['product_price'] > 0 ? $prodArrays[$product_id]['product_price'] : 0;?>฿</p>
 
                                 <p class="text-center buttons">
-                                    <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a> 
-                                    <a href="basket.html" class="btn btn-default"><i class="fa fa-heart"></i> Add to wishlist</a>
+                                    <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> เพิ่มลงตระกร้า</a> 
+                                    <a href="#"  onclick="fav_action(<?php echo $product_id;?>)" class="<?php echo $account_prod_count > 0 ? 'btn btn-default disabled ' : 'btn btn-default';?>"><i class="fa fa-heart"></i> <?php echo $account_prod_count > 0 ? 'เพิ่มลงรายการโปรดแล้ว ' : 'เพิ่มรายการโปรด';?></a>
                                 </p>
 
 
@@ -66,18 +84,18 @@
 
                             <div class="row" id="thumbs">
                                 <div class="col-xs-4">
-                                    <a href="img/detailbig1.jpg" class="thumb">
-                                        <img src="img/detailsquare.jpg" alt="" class="img-responsive">
+                                    <a href="<?php echo $img2_path;?>" class="thumb" >
+                                        <img src="<?php echo $img2_path;?>" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="col-xs-4">
-                                    <a href="img/detailbig2.jpg" class="thumb">
-                                        <img src="img/detailsquare2.jpg" alt="" class="img-responsive">
+                                    <a href="<?php echo $img3_path;?>" class="thumb">
+                                        <img src="<?php echo $img3_path;?>" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="col-xs-4">
-                                    <a href="img/detailbig3.jpg" class="thumb">
-                                        <img src="img/detailsquare3.jpg" alt="" class="img-responsive">
+                                    <a href="<?php echo $img4_path;?>" class="thumb">
+                                        <img src="<?php echo $img4_path;?>" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
@@ -88,26 +106,30 @@
 
                     <div class="box" id="details">
                         <p>
-                            <h4>Product details</h4>
-                            <p>White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
-                            <h4>Material & care</h4>
+                            <h1>รายละเอียดสินค้า</h1>
+                            <p><?php echo $prodArrays[$product_id]['product_detail'];?></p>
+                            <?php
+                            if(!empty($prodArrays[$product_id]['product_meterial'])){
+                            ?>
+                            <h4>วัตถุดิบ</h4>
+                                <p><?php echo $prodArrays[$product_id]['product_meterial'];?></p>
+                            <?php
+                            }
+                            ?>
+
+                            <?php
+                            if(!empty($prodArrays[$product_id]['product_size'])){
+                            ?>
+                            <h4>ขนาด</h4>
                             <ul>
-                                <li>Polyester</li>
-                                <li>Machine wash</li>
-                            </ul>
-                            <h4>Size & Fit</h4>
-                            <ul>
-                                <li>Regular fit</li>
-                                <li>The model (height 5'8" and chest 33") is wearing a size S</li>
+                                <p><?php echo $prodArrays[$product_id]['product_size'];?></p>
                             </ul>
 
-                            <blockquote>
-                                <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details. Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em>
-                                </p>
-                            </blockquote>
-
-                            <hr>
-                            <div class="social">
+                            <?php
+                            }
+                            ?>
+                         
+                            <!-- <div class="social">
                                 <h4>Show it to your friends</h4>
                                 <p>
                                     <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
@@ -115,16 +137,23 @@
                                     <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
                                     <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
                                 </p>
-                            </div>
+                            </div> -->
                     </div>
+                    <?php
+                    $prod_cateArrays = getProduct_withCategory('', '','' ,'','','','','');
+                    unset($prod_cateArrays[$product_id]);
+                 
+                    if(count($prod_cateArrays) > 0){
 
+                        
+                    ?>
                     <div class="row same-height-row">
                         <div class="col-md-3 col-sm-6">
                             <div class="box same-height">
-                                <h3>You may also like these products</h3>
+                                <h3>สินค้าที่คุณอาจจะชอบ</h3>
                             </div>
                         </div>
-
+                      
                         <div class="col-md-3 col-sm-6">
                             <div class="product same-height">
                                 <div class="flip-container">
@@ -151,157 +180,16 @@
                             </div>
                             <!-- /.product -->
                         </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product same-height">
-                                <div class="flip-container">
-                                    <div class="flipper">
-                                        <div class="front">
-                                            <a href="detail.php">
-                                                <img src="img/product1.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="back">
-                                            <a href="detail.php">
-                                                <img src="img/product1_2.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="detail.php" class="invisible">
-                                    <img src="img/product1.jpg" alt="" class="img-responsive">
-                                </a>
-                                <div class="text">
-                                    <h3>Fur coat</h3>
-                                    <p class="price">$143</p>
-                                </div>
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product same-height">
-                                <div class="flip-container">
-                                    <div class="flipper">
-                                        <div class="front">
-                                            <a href="detail.php">
-                                                <img src="img/product3.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="back">
-                                            <a href="detail.php">
-                                                <img src="img/product3_2.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="detail.php" class="invisible">
-                                    <img src="img/product3.jpg" alt="" class="img-responsive">
-                                </a>
-                                <div class="text">
-                                    <h3>Fur coat</h3>
-                                    <p class="price">$143</p>
-
-                                </div>
-                            </div>
+                        <?php
+                        }
+                        ?>
+                      
                             <!-- /.product -->
                         </div>
 
                     </div>
 
-                    <div class="row same-height-row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="box same-height">
-                                <h3>Products viewed recently</h3>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product same-height">
-                                <div class="flip-container">
-                                    <div class="flipper">
-                                        <div class="front">
-                                            <a href="detail.php">
-                                                <img src="img/product2.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="back">
-                                            <a href="detail.php">
-                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="detail.php" class="invisible">
-                                    <img src="img/product2.jpg" alt="" class="img-responsive">
-                                </a>
-                                <div class="text">
-                                    <h3>Fur coat</h3>
-                                    <p class="price">$143</p>
-                                </div>
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product same-height">
-                                <div class="flip-container">
-                                    <div class="flipper">
-                                        <div class="front">
-                                            <a href="detail.php">
-                                                <img src="img/product1.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="back">
-                                            <a href="detail.php">
-                                                <img src="img/product1_2.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="detail.php" class="invisible">
-                                    <img src="img/product1.jpg" alt="" class="img-responsive">
-                                </a>
-                                <div class="text">
-                                    <h3>Fur coat</h3>
-                                    <p class="price">$143</p>
-                                </div>
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product same-height">
-                                <div class="flip-container">
-                                    <div class="flipper">
-                                        <div class="front">
-                                            <a href="detail.php">
-                                                <img src="img/product3.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="back">
-                                            <a href="detail.php">
-                                                <img src="img/product3_2.jpg" alt="" class="img-responsive">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="detail.php" class="invisible">
-                                    <img src="img/product3.jpg" alt="" class="img-responsive">
-                                </a>
-                                <div class="text">
-                                    <h3>Fur coat</h3>
-                                    <p class="price">$143</p>
-
-                                </div>
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-                    </div>
+              
 
                 </div>
                 <!-- /.col-md-9 -->
@@ -326,5 +214,30 @@
 
 
 </body>
-
+<script>
+var u_id = <?php echo $u_id;?>;
+var cate_id = <?php echo isset($_GET['cate_id']) ? $_GET['cate_id'] : 0;?>;
+function fav_action(product_id){
+    if(u_id > 0){
+        $('#loadingDiv').show();
+        var url = './include/ajax/product_form.php';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                session_id: u_id,
+                id: product_id,
+                action: "insert_favourite"
+            },
+            success: function (data, status, xhr) {
+                $('#loadingDiv').hide();
+                window.location.href = "detail.php?product_id="+ product_id +"&cate_id=" + cate_id + "";
+            }
+        });
+    }
+    else{
+        alert('กรุณาเข้าสู่ระบบ');
+    }
+}
+</script>
 </html>

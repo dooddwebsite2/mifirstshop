@@ -13,7 +13,7 @@
                 <?php } ?>
                 <?php if(!empty($_SESSION['user_id'])){
                     $u_id = deCodeMD5_ONETABLE($_SESSION['user_id'],'id','auth_account');
-                    $profileArr = LoginFunc($u_id,'','');
+                    $profileArr = LoginFunc($u_id,'','','1');
                     $firstKeyProd = empty($u_id) ? '' : array_keys($profileArr)[0];
                     $user_name = empty($firstKeyProd) ? '' : $profileArr[$firstKeyProd]['u_name'];
 

@@ -21,7 +21,7 @@
     /* SECURITY DECODE MD5 ONE TABLE*/
     $user_id = deCodeMD5_ONETABLE($user_id,'id','auth_account');
     /* END SECURITY DECODE MD5 ONE TABLE*/
-    $profilesArrays = LoginFunc($user_id,'','');
+    $profilesArrays = LoginFunc($user_id,'','','1');
     $firstKeysProfile = empty($user_id) ? '' : array_keys($profilesArrays)[0];
     $role_id = empty($firstKeysProfile) ? '' : $profilesArrays[$firstKeysProfile]['role_id'];
 ?>
@@ -87,7 +87,7 @@
                         <i class="fa fa-list"></i>รายการสั่งซื้อของฉัน</a>
                 </li>
                 <li>
-                    <a href="customer-wishlist.html">
+                    <a href="customer-wishlist.php">
                         <i class="fa fa-heart"></i>รายการโปรด</a>
                 </li>
 

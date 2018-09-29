@@ -80,7 +80,7 @@
 ?>
 
 <?php
-$profileArrays = LoginFunc($user_id,'','');
+$profileArrays = LoginFunc($user_id,'','','1');
 ?>
 <script>
 var u_pass = '<?php echo $profileArrays[$user_id]['u_pass'] ?>';

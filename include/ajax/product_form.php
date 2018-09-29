@@ -126,7 +126,7 @@ if($action == 'product_add'){
         ,'{$files_name[0]}','{$files_name[1]}','{$files_name[2]}','{$files_name[3]}');";
         executeQuery($sql);
 
-        $prodArrays =   $prodArrays = getProduct(0,' product_create_date DESC',1,'',$session_id);
+         $prodArrays = getProduct(0,' product_create_date DESC',1,'',$session_id);
         foreach($prodArrays as $_k => $v){
             $product_id = $prodArrays[$_k]['product_id'];
         }
@@ -154,8 +154,14 @@ if($action == 'product_delete'){
     $_QUERYARRAYS[] = "DELETE FROM product WHERE product_id = {$id}";
     $_QUERYARRAYS[] = "DELETE FROM product_cate_rel WHERE product_id = {$id}";
     $_QUERYARRAYS[] = "DELETE FROM product_brand_rel WHERE product_id = {$id}";
+    $_QUERYARRAYS[] = "DELETE FROM account_rel_product WHERE product_id = {$id}";
     DELETE_STRUCTURE($_QUERYARRAYS);
  }
-
+if($action == 'insert_favourite'){
+    $date_now = date("Y-m-d H:i:s");
+    $sql = "INSERT INTO account_rel_product(auth_account_id,product_id,create_date)
+    VALUES ('{$session_id}', '{$id}','{$date_now}');";
+    executeQuery($sql);
+}
 ?>
 

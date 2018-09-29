@@ -79,7 +79,9 @@
                             </div>
                         </div>
                     </div>
-
+                    <?php
+                
+                    ?>
                     <div class="row products">
                         <?php
                      
@@ -116,12 +118,12 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.php?product_id=<?php echo $product_id;?>">
+                                            <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>">
                                                 <img src="img/product/<?php echo $product_id;?>/<?php echo $product_img1;?>" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.php?product_id=<?php echo $product_id;?>">
+                                            <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>">
                                                 <img src="img/product/<?php echo $product_id;?>/<?php echo $product_img1;?>" alt="" class="img-responsive">
                                             </a>
                                         </div>
@@ -132,11 +134,11 @@
                                 </a>
                                 <div class="text">
                                     <h3>
-                                        <a href="detail.php?product_id=<?php echo $product_id;?>"><?php echo $product_name;?></a>
+                                        <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>"><?php echo $product_name;?></a>
                                     </h3>
                                     <p class="price"><?php echo $product_price;?></p>
                                     <p class="buttons">
-                                        <a href="detail.php?product_id=<?php echo $product_id;?>" class="btn btn-default">View detail</a>
+                                        <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>" class="btn btn-default">View detail</a>
                                         <a href="basket.php?product_id=<?php echo $product_id;?>" class="btn btn-primary">
                                             <i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </p>

@@ -10,7 +10,7 @@ if($action == 'login_request')
 {
     $status = false;
     $msg = "";
-    $profileArrays = LoginFunc('',$user_modal,$password_modal);
+    $profileArrays = LoginFunc('',$user_modal,$password_modal,'1');
   
     if(count($profileArrays) > 0 ) { 
         $status = true;

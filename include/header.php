@@ -6,6 +6,10 @@ session_start();
 if(isset($_GET['profileUserID']) && isset($_SESSION["expire"]))
 { 
     $_SESSION["user_id"] = $_GET['profileUserID'];
+    // set cart
+    if(!isset($_SESSION['cart']['product'])){
+        $_SESSION['cart']['product'] = [];
+    }
   
 }
 $now = time(); // Checking the time now when home page starts.

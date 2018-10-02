@@ -6,6 +6,9 @@
         
         $cate_information = array();
         $cate_information = array_shift(array_values($cate_Arr));
+
+        $u_id = !empty($_SESSION['user_id']) ?  deCodeMD5_ONETABLE($_SESSION['user_id'],'id','auth_account') : 0;
+
         
          
 ?>

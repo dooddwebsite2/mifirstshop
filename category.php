@@ -5,7 +5,12 @@
 
 <body>
 
-
+    <style>
+    disabled {
+        pointer-events: none;*/
+        cursor: default;
+    }
+    </style>
     <?php include("./include/navbar.php");?>
 
     <?php include("./include/category/category_variable.php");?>
@@ -100,7 +105,6 @@
                            $product_active = empty($prodArrays[$_prodKeys]['product_active']) ? '' : $prodArrays[$_prodKeys]['product_active'];
                            $product_img1 = empty($prodArrays[$_prodKeys]['product_img1']) ? '' : $prodArrays[$_prodKeys]['product_img1'];
                            $product_price = empty($prodArrays[$_prodKeys]['product_price']) ? 0 : $prodArrays[$_prodKeys]['product_price'];
-                          
                            $strProductDate= strtotime($product_create_date);
                            $strbeforeDate = strtotime("-1 day", $strProductDate);
                            
@@ -111,7 +115,8 @@
                         //   echo date("Y-m-d H:i:s", $strProductDate);
                         //   echo '<BR>';
                         //   echo date("Y-m-d H:i:s", $strtomorrowDate);
-                           
+                        
+                          
                         ?>
                         <div id="<?php echo $product_id;?>" class="col-md-4 col-sm-6">
                             <div class="product">
@@ -136,11 +141,13 @@
                                     <h3>
                                         <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>"><?php echo $product_name;?></a>
                                     </h3>
-                                    <p class="price"><?php echo $product_price;?></p>
+                                    <p class="price"><?php echo $product_price.'฿';?></p>
                                     <p class="buttons">
-                                        <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>" class="btn btn-default">View detail</a>
-                                        <a href="basket.php?product_id=<?php echo $product_id;?>" class="btn btn-primary">
-                                            <i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <a href="detail.php?product_id=<?php echo $product_id;?>&cate_id=<?php echo $product_cate_id;?>" class="btn btn-default">ดูรายละเอียด</a>
+                                        <?php
+                              
+                                        ?>
+                                        <?php include("./include/product/add_to_cart.php");?>
                                     </p>
                                 </div>
                                 <!-- /.text -->
@@ -232,4 +239,27 @@
     </div>
     <!-- /#all -->
 </body>
+<script>
+var u_id = <?php echo $u_id;?>;
+function add_to_cart(user_id,product_id){
+    var user_id = user_id;
+    var product_id = product_id;
+    if(u_id > 0){
+        $('#loadingDiv').show();
+        var url = './include/ajax/product_form.php';    
+            $.ajax({
+            type: "POST",
+            url: url,
+            data: {user_id:user_id,product_id:product_id,action:"add_to_cart"},
+            success: function(data,status,xhr){
+                $('#loadingDiv').hide();
+                window.location.href = "category.php?cate_id=<?php echo $product_cate_id;?>";
+            }
+        });
+    }
+    else{
+        alert('กรุณาเข้าสู่ระบบ');
+    }
+}
+</script>
 </html>

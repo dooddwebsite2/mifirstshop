@@ -27,11 +27,14 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                 <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
                     <span class="sr-only">Toggle search</span>
                     <i class="fa fa-search"></i>
-                </button>
-                <a class="btn btn-default navbar-toggle" href="basket.html">
+                </button>-->
+                <?php
+                $items = isset($_SESSION['cart'])  && (count($_SESSION['cart']['product']) > 0) ? count($_SESSION['cart']['product']) > 0 : 0;
+                ?>
+                <a class="btn btn-default navbar-toggle" href="#" onclick="go_to_cart(<?php echo $items;?>)">
                     <i class="fa fa-shopping-cart"></i>
-                    <span class="hidden-xs">3 items in cart</span>
-                </a> -->
+                    <span class="hidden-xs"><?php echo   isset($_SESSION['cart'])  && (count($_SESSION['cart']['product']) > 0)? count($_SESSION['cart']['product']) : 0;?> items</span>
+                </a> 
             </div>
         </div>
         <!--/.navbar-header -->
@@ -76,15 +79,36 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                     </ul>
                 </li>
             </ul>
+            
 
         </div>
-      
+        <div class="navbar-buttons">
+   
+            <div class="navbar-collapse collapse right" id="basket-overview">
+                <a href="#" onclick="go_to_cart(<?php echo $items;?>)" class="btn btn-primary navbar-btn">
+                    <i class="fa fa-shopping-cart"></i><span class="hidden-sm"><?php echo isset($_SESSION['cart'])  && (count($_SESSION['cart']['product']) > 0)  ? count($_SESSION['cart']['product']) : 0 ;?> items</span></a>
+            </div>
+            <!--/.nav-collapse -->
+
+         
+
+        </div>
 
     </div>
     <!-- /.container -->
 </div>
 <!-- /#navbar -->
 </form>
+<script>
+function go_to_cart(items){
+    if(items > 0){
+        window.location.href = "basket.php";
+    }
+    else{
+        alert('กรุณาเลือกสินค้า');
+    }
+}
+</script>
 <!-- <div class="container">
     <div class="row">
         <div class="col-md-3 col-sm-3 col-xs-3 banner">

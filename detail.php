@@ -34,8 +34,7 @@
                 </div>
                 <?php
                 
-                $u_id = !empty($_SESSION['user_id']) ?  deCodeMD5_ONETABLE($_SESSION['user_id'],'id','auth_account') : 0;
-
+                
                 
                 if($_GET['product_id']){
                     $product_id = $_GET['product_id'];
@@ -75,7 +74,7 @@
                                 <p class="price"><?php echo $prodArrays[$product_id]['product_price'] > 0 ? $prodArrays[$product_id]['product_price'] : 0;?>฿</p>
 
                                 <p class="text-center buttons">
-                                    <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> เพิ่มลงตระกร้า</a> 
+                                <?php include("./include/product/add_to_cart.php");?> 
                                     <a href="#"  onclick="fav_action(<?php echo $product_id;?>)" class="<?php echo $account_prod_count > 0 ? 'btn btn-default disabled ' : 'btn btn-default';?>"><i class="fa fa-heart"></i> <?php echo $account_prod_count > 0 ? 'เพิ่มลงรายการโปรดแล้ว ' : 'เพิ่มรายการโปรด';?></a>
                                 </p>
 
@@ -142,9 +141,10 @@
                     <?php
                     $prod_cateArrays = getProduct_withCategory('', '','' ,'','','','','');
                     unset($prod_cateArrays[$product_id]);
-                 
+                    $prod_cateArrays = array_slice($prod_cateArrays,0,3);
+                  
                     if(count($prod_cateArrays) > 0){
-
+                            
                         
                     ?>
                     <div class="row same-height-row">
@@ -153,33 +153,43 @@
                                 <h3>สินค้าที่คุณอาจจะชอบ</h3>
                             </div>
                         </div>
-                      
+                        <?php
+                        foreach($prod_cateArrays as $_prod_cate_keys => $_prod_cate_value){
+                            $prod_id = $prod_cateArrays[$_prod_cate_keys]['product_id'] > 0 ? $prod_cateArrays[$_prod_cate_keys]['product_id'] : 0;
+
+                            $img1 = empty($prod_cateArrays[$_prod_cate_keys]["product_img1"]) ? 'no_image.png' : $prod_cateArrays[$_prod_cate_keys]["product_img1"];
+                            $img1_path = empty($prod_cateArrays[$_prod_cate_keys]["product_img1"]) ? 'img/'.$img1 : 'img/product/'.$prod_id.'/'.$img1;
+                            
+                        ?>
                         <div class="col-md-3 col-sm-6">
                             <div class="product same-height">
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.php">
-                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            <a href="detail.php?product_id=<?php echo $prod_id;?>&cate_id=<?php echo $prod_cateArrays[$_prod_cate_keys]['cate_id'];?>">
+                                            <img src="<?php echo $img1_path;?>" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.php">
-                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                           <a href="detail.php?product_id=<?php echo $prod_id;?>&cate_id=<?php echo $prod_cateArrays[$_prod_cate_keys]['cate_id'];?>">
+                                            <img src="<?php echo $img1_path;?>" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.php" class="invisible">
+                                <a href="#" class="invisible">
                                     <img src="img/product2.jpg" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3>Fur coat</h3>
-                                    <p class="price">$143</p>
+                                    <h3><?php echo $prod_cateArrays[$_prod_cate_keys]['product_name'];?></h3>
+                                    <p class="price"><?php echo $prod_cateArrays[$_prod_cate_keys]['product_price'].'฿';?></p>
                                 </div>
                             </div>
                             <!-- /.product -->
                         </div>
+                        <?php
+                        }
+                        ?>
                         <?php
                         }
                         ?>
@@ -230,6 +240,28 @@ function fav_action(product_id){
                 action: "insert_favourite"
             },
             success: function (data, status, xhr) {
+                $('#loadingDiv').hide();
+                window.location.href = "detail.php?product_id="+ product_id +"&cate_id=" + cate_id + "";
+            }
+        });
+    }
+    else{
+        alert('กรุณาเข้าสู่ระบบ');
+    }
+}
+
+
+function add_to_cart(user_id,product_id){
+    var user_id = user_id;
+    var product_id = product_id;
+    if(u_id > 0){
+        $('#loadingDiv').show();
+        var url = './include/ajax/product_form.php';    
+            $.ajax({
+            type: "POST",
+            url: url,
+            data: {user_id:user_id,product_id:product_id,action:"add_to_cart"},
+            success: function(data,status,xhr){
                 $('#loadingDiv').hide();
                 window.location.href = "detail.php?product_id="+ product_id +"&cate_id=" + cate_id + "";
             }

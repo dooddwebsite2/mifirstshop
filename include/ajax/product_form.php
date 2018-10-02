@@ -1,9 +1,11 @@
 <?php require_once('../../config.php'); ?>
 <?php
+session_start();
  $ds = DIRECTORY_SEPARATOR; 
 
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 $id = isset($_POST['id']) ? $_POST['id'] : 0;
+$product_id = isset($_POST['product_id']) ? $_POST['product_id'] : 0;
 $session_id =isset($_POST["session_id"])?$_POST["session_id"]:0;
 //$file_name=isset($_POST['file_name'])?$_POST['file_name']:'';
 $product_name=isset($_POST["product_name"])?$_POST["product_name"]:"-";
@@ -162,6 +164,29 @@ if($action == 'insert_favourite'){
     $sql = "INSERT INTO account_rel_product(auth_account_id,product_id,create_date)
     VALUES ('{$session_id}', '{$id}','{$date_now}');";
     executeQuery($sql);
+}
+
+if($action == 'add_to_cart'){
+    $bool = false;
+    if(count($_SESSION['cart']['product'] > 0)){
+        foreach($_SESSION['cart']['product'] as $_key => $_val){
+            if($_val == $product_id){
+                $bool = true;
+            }
+        }
+    }    
+    if($product_id > 0 && $bool == false){
+        $_SESSION['cart']['product'][] = $product_id;
+    }
+}
+if($action == 'delete_to_cart'){
+    if(count($_SESSION['cart']['product'] > 0)){
+        foreach($_SESSION['cart']['product'] as $_key => $_val){
+            if($_val == $product_id){
+                unset($_SESSION['cart']['product'][$_key]);
+            }
+        }
+    }  
 }
 ?>
 

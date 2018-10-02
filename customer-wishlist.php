@@ -63,8 +63,8 @@
                                         <h3> <a href="detail.php?product_id=<?php echo $prod_id;?>&cate_id=<?php echo $cate_id[$prod_id]['parent_id'];?>"><?php echo $account_prod_count[$user_id]['child'][$_kArr]['product_name'];?></a></h3>
                                         <p class="price"><?php echo $account_prod_count[$user_id]['child'][$_kArr]['product_price'].'฿';?></p>
                                         <p class="buttons">
-                                            <a href="detail.php?product_id=<?php echo $prod_id;?>&cate_id=<?php echo $cate_id[$prod_id]['parent_id'];?>" class="btn btn-default">View detail</a>
-                                            <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a href="detail.php?product_id=<?php echo $prod_id;?>&cate_id=<?php echo $cate_id[$prod_id]['parent_id'];?>" class="btn btn-default">ดูรายละเอียด</a>
+                                            <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>เพิ่มลงตระกร้า</a>
                                         </p>
                                     </div>
                                     

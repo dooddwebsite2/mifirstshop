@@ -15,7 +15,7 @@
                         <li>
                             <?php include("./include/content/page_breadcrumb.php");?>
                         </li>
-                        <li>วิธีการชำระเงิน</li>
+                        <li>ชำระเงิน</li>
                     </ul>
                 </div>
 
@@ -24,7 +24,7 @@
                 <div class="col-md-12">
 
                     <div class="box" id="text-page">
-                        <h1>วิธีการชำระเงิน</h1>
+                        <h1>ชำระเงิน</h1>
 
                         <p class="lead">หากต้องการชำระเงินผ่าน Shopee สามารถศึกษาข้อมูลเบื้องต้นได้ตามนี้เลยนะค่ะ <a href="https://help.shopee.co.th/hc/th/articles/115007376947-%E0%B8%8A-%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%8A%E0%B8%B3%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%87%E0%B8%B4%E0%B8%99%E0%B9%83%E0%B8%99-Shopee-%E0%B8%A1%E0%B8%B5%E0%B8%81%E0%B8%B5-%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97-">ช่องทำชำระเงิน Shopee</a>.</p>
 

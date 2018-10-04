@@ -134,8 +134,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="product_desc">* รายละเอียดสินค้า</label>
-                        <textarea rows="4" type="text" class="form-control" id="product_desc"><?php echo (!empty($prodArrays) && isset($_GET['product_id'])) ?  $prodArrays[$product_id]['product_detail']: '';?>
-                     </textarea>
+                        <textarea rows="4" type="text" class="form-control" id="product_desc"><?php echo (!empty($prodArrays) && isset($_GET['product_id'])) ?  $prodArrays[$product_id]['product_detail']: '';?></textarea>
                     </div>
                 </div>
             </div>

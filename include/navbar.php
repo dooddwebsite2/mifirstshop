@@ -68,7 +68,7 @@ if(isset($_GET)){$navActive = empty($_GET['activeNav']) ? '6a992d5529f459a44fee5
                     <a href="questions.php?activeNav=<?php echo md5('questions');?>">คำถามที่พบบ่อย</a>
                 </li>
                 <li id="howtobuy" class="<?php if( $navActive == 'howtobuy'){echo 'active';}?>  ThaifontBangnam navBarHeader">
-                    <a href="howtobuy.php?activeNav=<?php echo md5('howtobuy');?>">วิธีการชำระเงิน</a>
+                    <a href="howtobuy.php?activeNav=<?php echo md5('howtobuy');?>">ชำระเงิน</a>
                 </li>
                 <li id="contact" class="<?php if( $navActive == 'contact'){echo 'active';}?>  ThaifontBangnam navBarHeader">
                     <a href="contact.php?activeNav=<?php echo md5('contact');?>">ติดต่อเรา</a>

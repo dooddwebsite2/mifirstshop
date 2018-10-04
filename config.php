@@ -479,7 +479,8 @@ function DELETE_STRUCTURE($STR_ARRAYS){
 }
 /* FACEBOOK API */
 function sendInboxMessage() {
-   
+    
+ 
 }
 
 

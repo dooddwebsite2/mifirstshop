@@ -36,7 +36,9 @@
                                 $img1 = empty($account_prod_count[$user_id]['child'][$_kArr]["product_img1"]) ? 'no_image.png' : $account_prod_count[$user_id]['child'][$_kArr]["product_img1"];
                                 $img1_path = empty($account_prod_count[$user_id]['child'][$_kArr]["product_img1"]) ? 'img/'.$img1 : 'img/product/'.$prod_id.'/'.$img1;
                                 
-                               
+                                $product_id = $prod_id;
+                                $u_id = $user_id;
+                                
                                 $cate_id = count(getProduct_withCategory($prod_id, '','' ,'','','','','')) > 0 ? getProduct_withCategory($prod_id, '','' ,'','','','','') : 0 ; 
                               
                             ?>
@@ -64,8 +66,8 @@
                                         <p class="price"><?php echo $account_prod_count[$user_id]['child'][$_kArr]['product_price'].'฿';?></p>
                                         <p class="buttons">
                                             <a href="detail.php?product_id=<?php echo $prod_id;?>&cate_id=<?php echo $cate_id[$prod_id]['parent_id'];?>" class="btn btn-default">ดูรายละเอียด</a>
-                                            <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>เพิ่มลงตระกร้า</a>
-                                        </p>
+                                            <?php include("./include/product/add_to_cart.php");?>
+                                    </p>
                                     </div>
                                     
                                 </div>
@@ -107,9 +109,27 @@
 $profileArrays = LoginFunc($user_id,'','','1');
 ?>
 <script>
-var u_pass = '<?php echo $profileArrays[$user_id]['u_pass'] ?>';
-var user_id = '<?php echo $user_id;?>';
-
+var u_id = <?php echo $u_id;?>;
+function add_to_cart(user_id,product_id){
+    var user_id = user_id;
+    var product_id = product_id;
+    if(u_id > 0){
+        $('#loadingDiv').show();
+        var url = './include/ajax/product_form.php';    
+            $.ajax({
+            type: "POST",
+            url: url,
+            data: {user_id:user_id,product_id:product_id,action:"add_to_cart"},
+            success: function(data,status,xhr){
+                $('#loadingDiv').hide();
+                window.location.href = "customer-wishlist.php";
+            }
+        });
+    }
+    else{
+        alert('กรุณาเข้าสู่ระบบ');
+    }
+}
 </script>
 </html>
 

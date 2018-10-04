@@ -68,8 +68,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="cate_desc" style="display: inline;vertical-align: top;">* รายละเอียด</label>
-                        <textarea rows="4" type="text" class="form-control"  id="cate_desc"><?php echo (!empty($cateArrs) && isset($_GET['cate_id'])) ?  $cateArrs[$cate_id]['cate_desc']: '';?>
-                     </textarea>
+                        <textarea rows="4" type="text" class="form-control"  id="cate_desc"><?php echo (!empty($cateArrs) && isset($_GET['cate_id'])) ?  $cateArrs[$cate_id]['cate_desc']: '';?></textarea>
                     </div>
                 </div>
             </div>

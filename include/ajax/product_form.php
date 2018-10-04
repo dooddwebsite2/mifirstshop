@@ -26,7 +26,12 @@ $product_logistic_send=isset($_POST["product_logistic_send"])?$_POST["product_lo
 $subArrays=empty($_POST["subArrays"])? "":$_POST["subArrays"];
 $_filename =empty($_POST["file_name"])? "":$_POST["file_name"];
 
-
+$Object_SUMS = empty($_POST['Object_SUMS']) ? "" : $_POST['Object_SUMS'];
+$Object_AMOUNT = empty($_POST['Object_AMOUNT']) ? "" : $_POST['Object_AMOUNT'];
+$Object_RECEIPT = empty($_POST['Object_RECEIPT']) ? "" : $_POST['Object_RECEIPT'];
+$Object_AddressInfo = empty($_POST['Object_AddressInfo']) ? "" : $_POST['Object_AddressInfo'];
+$delivery_method = empty($_POST["delivery_method"]) ? "" :$_POST["delivery_method"];
+$payments_method = empty($_POST["payments_method"]) ? "" :$_POST["payments_method"];
 if(!empty($_FILES)){
     $target_img_path = returnPath('tmp_img',$session_id,'','');
     foreach($_FILES['file']['name'] as $_keys => $_info_files){
@@ -179,11 +184,36 @@ if($action == 'add_to_cart'){
         $_SESSION['cart']['product'][] = $product_id;
     }
 }
+
+if($action == 'save_to_cart'){
+    // save amount and product id
+    
+    if(count($Object_SUMS)  > 0 && count($Object_AMOUNT) && count($Object_RECEIPT) > 0){
+        foreach($Object_SUMS as $_keys => $_value){
+            $_SESSION['cart']['orders'][$_keys]['product_id'] = $_keys;
+            $_SESSION['cart']['orders'][$_keys]['value'] = $_value > 0 ? $_value : 0;
+            $_SESSION['cart']['orders'][$_keys]['amount'] = $Object_AMOUNT[$_keys] > 0 ? $Object_AMOUNT[$_keys] : 0;
+        }
+        $_SESSION['cart']['receipt_orders'] = $Object_RECEIPT;
+    }
+}
+if($action == 'save_to_cart_order_1'){
+    $_SESSION['cart']['orders_1'] = $Object_AddressInfo;
+}
+if($action == 'save_to_cart_order_2'){
+    $_SESSION['cart']['orders_2'] = $delivery_method;
+}
+if($action == 'save_to_cart_order_3'){
+    $_SESSION['cart']['orders_3'] = $payments_method;
+}
 if($action == 'delete_to_cart'){
     if(count($_SESSION['cart']['product'] > 0)){
         foreach($_SESSION['cart']['product'] as $_key => $_val){
             if($_val == $product_id){
                 unset($_SESSION['cart']['product'][$_key]);
+                if(isset($_SESSION['cart']['orders'][$_val])){
+                    unset($_SESSION['cart']['orders'][$_val]);
+                }
             }
         }
     }  

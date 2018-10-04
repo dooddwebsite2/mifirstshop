@@ -150,6 +150,8 @@ var myFORMDropzone = new Dropzone("div#myAwesomeDropzone", {
             
     });
 });
+
+
 </script>
 
 </html>

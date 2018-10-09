@@ -32,6 +32,7 @@ $Object_RECEIPT = empty($_POST['Object_RECEIPT']) ? "" : $_POST['Object_RECEIPT'
 $Object_AddressInfo = empty($_POST['Object_AddressInfo']) ? "" : $_POST['Object_AddressInfo'];
 $delivery_method = empty($_POST["delivery_method"]) ? "" :$_POST["delivery_method"];
 $payments_method = empty($_POST["payments_method"]) ? "" :$_POST["payments_method"];
+$review_method = empty($_POST["review_method"]) ? "" :$_POST["review_method"];
 if(!empty($_FILES)){
     $target_img_path = returnPath('tmp_img',$session_id,'','');
     foreach($_FILES['file']['name'] as $_keys => $_info_files){
@@ -205,6 +206,9 @@ if($action == 'save_to_cart_order_2'){
 }
 if($action == 'save_to_cart_order_3'){
     $_SESSION['cart']['orders_3'] = $payments_method;
+}
+if($action == 'save_to_cart_order_4'){
+    $_SESSION['cart']['orders_4'] = $review_method;
 }
 if($action == 'delete_to_cart'){
     if(count($_SESSION['cart']['product'] > 0)){

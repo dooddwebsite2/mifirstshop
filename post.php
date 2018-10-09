@@ -72,7 +72,7 @@
                             </p>
 
                             <div id="post-content">
-                                <p>
+                                <p class="lead">
                                     <?php echo $content_paragraph1;?>
                                 </p>
 
@@ -100,7 +100,7 @@
                                 if($content_paragraph2 != '-'){
 
                                 ?>
-                                            <p>
+                                            <p class="lead">
                                                 <?php echo $content_paragraph2;?>
                                             </p>
                                             <?php
@@ -132,7 +132,7 @@
                                 if($content_paragraph3 != '-'){
 
                                 ?>
-                                                            <p>
+                                                            <p class="lead">
                                                                 <?php echo $content_paragraph3;?>
                                                             </p>
                                                             <?php

@@ -43,68 +43,10 @@
                             <h1>ตระกร้าสินค้า</h1>
                             <p class="text-muted">You currently have <?php echo count($_SESSION['cart']['product']);?> item(s) in your cart.</p>
                             
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">สินค้า</th>
-                                            <th>จำนวน</th>
-                                            <th>ราคาต่อหน่วย&nbsp;(฿)</th>
-                                            <th>ลดราคา&nbsp;(%)</th>
-                                            <th align="center" colspan="2">รวม&nbsp;(฿)</th>
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        // get product from session
-                                        foreach($_SESSION['cart']['product'] as $_keys => $_vals){
-                                            $prodArrays = getProduct($_vals,' product_create_date DESC',1,'','');
-                                            $img1 = empty($prodArrays[$_vals]["product_img1"]) ? 'no_image.png' : $prodArrays[$_vals]["product_img1"];
-                                            $img1_path = empty($prodArrays[$_vals]["product_img1"]) ? 'img/'.$img1 : 'img/product/'.$_vals.'/'.$img1;
-                                            
-                                            $percents = empty($prodArrays[$_vals]['product_discount']) ? 0 : $prodArrays[$_vals]['product_discount'];
-                                            if(isset($_SESSION['cart']['orders'][$_vals]))
-                                            {
-                                                $price = $_SESSION['cart']['orders'][$_vals]['value'];
-                                                $amount = $_SESSION['cart']['orders'][$_vals]['amount'];
-                                            }else{
-                                                $price = empty($prodArrays[$_vals]['product_price']) ? 0 : $prodArrays[$_vals]['product_price'];
-                                                $amount = 1;
-                                            }
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <a href="#">
-                                                    <img src="<?php echo $img1_path;?>" alt="White Blouse Armani">
-                                                </a>
-                                            </td>
-                                            <td><a href="#"><?php echo $prodArrays[$_vals]['product_name'].'&nbsp;(คงเหลือในสต็อค&nbsp;'.$prodArrays[$_vals]['product_stock']. ')';?></a>
-                                            </td>
-                                            <td>
-                                                <input id="input_amout_<?php echo $_vals;?>" onchange="cal_sums(<?php echo $_vals;?>,<?php echo $percents;?>,<?php echo $prodArrays[$_vals]['product_price'];?>,<?php echo $prodArrays[$_vals]['product_stock'];?>)" type="number" value="<?php echo $amount;?>" min="0" max="<?php echo $prodArrays[$_vals]['product_stock'];?>"  hidden_id="<?php echo $_vals;?>" class="form-control input_amount">
-                                            </td>
-                                            <td><span><?php echo $prodArrays[$_vals]['product_price'].'';?></span></td>
-                                            <td><span><?php echo empty($prodArrays[$_vals]['product_discount']) ? 0 : $prodArrays[$_vals]['product_discount'];?></span></td>
-                                            <td><input id="sums_<?php echo $_vals;?>"  class="sum_input input_sum" hidden_id="<?php echo $_vals;?>"  style="text-align: left; " value="<?php echo $price.'';?>" disabled></td>
-                                            <td><a href="#" onclick="delete_product(<?php echo $_vals;?>)"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                 
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="5">รวม</th>
-                                            <th colspan="2"><input id="footer_sums" class="input_sum" style="text-align:right;" value="" disabled></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-
-                            </div>
-                            <!-- /.table-responsive -->
+                            <?php
+                            $amount_disabled = false;
+                            ?>
+                            <?php include("./include/product/order_list.php");?>
 
                             <div class="box-footer">
                                 <div class="pull-left">
@@ -238,41 +180,9 @@ var Object_SUMS = {};
 var Object_AMOUNT = {};
 
 $( document ).ready(function() {
-    if($('.sum_input').length > 0){
-        $('.sum_input').each(function(x,y) {
-            var product_id = $(y).attr("hidden_id") > 0 ? $(y).attr("hidden_id") : 0;
-            Object_SUMS[product_id] = $(y).val() > 0 ? $(y).val() : 0;
-            
-        });
-        call_amount(".input_amount");
-        cal_all(Object_SUMS);
-        
-    }
-    
+    on_load_set_default_value(); 
 });
-function cal_sums(product_id,percents,price,stock){
-    
-    var product_value = $('#input_amout_' + product_id).val();
-    if(product_value <= stock){
-        var percents  = percents > 0 ? percents  : 0; 
-        var sums = (product_value * price) - (price * percents) / 100;
-        $('#sums_'+ product_id).val(sums);
-        Object_SUMS[product_id] = sums > 0 ? sums : 0;
-        cal_all(Object_SUMS);
-        call_amount(".input_amount");
-    }
-    else{
-        alert("จำนวนสินค้าในสต็อคมีไม่เพียงพอ");
-    }
-}
-function call_amount(prod_class){
-    if($(prod_class).length > 0){
-        $(prod_class).each(function(x,y) {
-            var product_id = $(y).attr("hidden_id") > 0 ? $(y).attr("hidden_id") : 0;
-            Object_AMOUNT[product_id] = $('#input_amout_' + product_id).val();
-        });
-    }
-}
+
 
 
 function delete_product(product_id){

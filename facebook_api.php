@@ -1,6 +1,6 @@
 <?php
-
-$access_token = "EAADmEOzptvIBAEwHxpGqnnuUpx1DcP7uGqcQ5eMChyAv3ZAlEaXwSccd3vPCEFKTwoP5QqxTSAH7IZCvGOSk2ZAKaKcZCbyEmTTvWd3vGCbry3iuanZAjxc1KWHmZBguXRAZB74dHadZCWgcvUrxuZCqIwZCaRoA49hqbb0eDXesjxT3pkZAPd164tF";
+// client token b87a141d85d012ba43872321c8589c28
+$access_token = "EAADmEOzptvIBAKrm2ldOxOJrcMofZBd3Q4VEiZCV52eoNjw3GB8hxZBPcTCZCPmzMxFEB4Ou4fgsdJWIfA5AiCI9CtWARNbE07FdqbYhk4soJOIDPMQG1MZAKqf9gTlu2Fg7cE55GJymzDcPvw2NhZA8bmmBms2HSy1bTb8ghrL51l6av84ko4";
 $verify_token = "yellow_duck";
 $hub_verify_token = null;
 if(isset($_REQUEST['hub_challenge'])) {

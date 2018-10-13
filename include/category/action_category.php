@@ -177,7 +177,7 @@
         if($('#sub_cate_tag > span').size() == 0){
             $('#lengthSubCate').show();
         }
-   }
+   } 
    function call_subCategory(id){
        var subid = id ? id : 0;
        var cateArrays = <?php echo json_encode($cate_Arr); ?>;

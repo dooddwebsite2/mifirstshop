@@ -195,7 +195,7 @@
                         $comment_subject = empty($rows['comment_subject'])?'-':$rows['comment_subject'];
                      ?>
                                             <div class="row comment">
-                                                <div class="col-sm-3 col-md-2 text-center-xs">
+                                                <div class="col-xs-3 col-sm-3 col-md-2 text-center-xs">
                                                     <p>
                                                         <img src="img/blog/person.png" class="img-responsive img-circle" alt="">
                                                     </p>

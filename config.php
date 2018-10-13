@@ -15,8 +15,43 @@ $roles = array("ผู้ดูแลระบบ","ผู้ใช้ธรร�
 /* set date */
 date_default_timezone_set("Asia/Bangkok");
 
+/* ORDER FORM */
+/* delivery method*/
+function func_delivery_method($name,$sub){
+    $delivery_form = array();
+    $delivery_form['delivery1']['header'] = 'ไปรษณีย์พัสดุธรรมดา';
+    $delivery_form['delivery1']['content'] = 'ไม่จำกัดน้ำหนัก ไม่สามารถตรวจสอบสถานะทางอินเทอร์เน็ตได้ ระยะเวลาในการจัดส่งภาคกลาง 3-5 วัน ระยะเวลาในการจัดส่งภาคอื่น 5-7 วัน';
+
+    $delivery_form['delivery2']['header'] = 'ไปรษณีย์พัสดุลงทะเบียน';
+    $delivery_form['delivery2']['content'] = 'น้ำหนักสินค้าไม่เกิน 1.7 กก. ตรวจสอบสถานะทางอินเทอร์เน็ตได้ ระยะเวลาในการจัดส่งภาคกลาง 3-5 วัน ระยะเวลาในการจัดส่งภาคอื่น 5-7 วัน';
+
+    $delivery_form['delivery3']['header'] = 'ไปรษณีย์พัสดุ ส่งพิเศษ';
+    $delivery_form['delivery3']['content'] = 'ไม่จำกัดน้ำหนัก ตรวจสอบสถานะทางอินเทอร์เน็ตได้ ระยะเวลาในการจัดส่งภาคกลาง 1-2 วัน ระยะเวลาในการจัดส่งภาคอื่น 2-3 วัน';
+
+    $return_arr = !empty($sub) ? $delivery_form[$name][$sub] : $delivery_form[$name];
+    return $return_arr;
+}
+
+/* payment method*/
+function func_payment_method($name,$sub){
+    $payment_form = array();
+    $payment_form['bangkok_bank']['header'] = 'ธนาคารกรุงเทพ';
+    $payment_form['bangkok_bank']['content'] = 'เลขบัญชี:087-7-31701-6 ชื่อบัญชี:สรัลชนา หนูแสง';
+
+    $payment_form['krugthai_bank']['header'] = 'ธนาคารกรุงไทย';
+    $payment_form['krugthai_bank']['content'] = 'เลขบัญชี:762-0-47541-9 ชื่อบัญชี:สรัลชนา หนูแสง';
+
+    $payment_form['kbank_bank']['header'] = 'ธนาคารกสิกรไทย';
+    $payment_form['kbank_bank']['content'] = 'เลขบัญชี:015-2-60228-6 ชื่อบัญชี:สรัลชนา หนูแสง';
+
+    $payment_form['scb_bank']['header'] = 'ธนาคารไทยพาณิชย์';
+    $payment_form['scb_bank']['content'] = 'เลขบัญชี:052-421403-4 ชื่อบัญชี:สรัลชนา หนูแสง';
+    
+    $return_arr = !empty($sub) ? $payment_form[$name][$sub] : $payment_form[$name];
+    return $return_arr;
+}
 /* PRODUCT DIRECTORY */
- 
+
 function returnPath($str,$session_id,$product_id,$type){
     $ds = DIRECTORY_SEPARATOR; 
     $date_now = date("Y-m-d H:i:s");
@@ -393,7 +428,45 @@ function get_account_rel_product($auth_account_id,$product_id,$create_date,$role
 
 }
 
+/* ORDER TABLE*/
+function get_order_rel_table($order_account_id,$order_id,$order_purchase_number,$create_date,$product_id,$order_by,$limit,$fields){
+    $conditionCond = " WHERE 1=1 ";
+    $conditionCond .= ($order_account_id == 0 ) ? '' : " AND orders.order_account_id = {$order_account_id} ";
+    $conditionCond .= empty($product_id) ? '' : " AND orders.product_id = {$product_id} ";
+    $conditionCond .= empty($create_date) ? '' : " AND orders.create_date = '{$create_date}' ";
+    $conditionCond .= empty($order_id) ? '' : " AND orders.order_id = '{$order_id}' ";
+    $conditionCond .= empty($order_purchase_number) ? '' : " AND orders.order_purchase_number = '{$order_purchase_number}' ";
+    $conditionCond .= empty($order_by) ? '' : " ORDER BY {$order_by} ";
+    $conditionCond .= empty($limit) ? '' : " LIMIT {$limit} ";
+ 
+    $QueryString = "SELECT orders.*,orders_rel_product.order_rel_product_id,orders_rel_product.product_amount,
+    orders_rel_product.product_cost,orders_rel_product.product_id AS order_rel_product_id,orders_rel_product.product_price
+    ,auth_account.*,product.* FROM orders 
+    LEFT JOIN orders_rel_product ON orders.order_id = orders_rel_product.order_id
+    LEFT JOIN auth_account ON orders.order_account_id = auth_account.id
+    LEFT JOIN product ON orders_rel_product.product_id = product.product_id
+     {$conditionCond}
+    ";
+  
 
+    $condArrays = array();
+    $resultStr = sendQuery($QueryString);
+    if (empty($resultStr)) {
+        return $condArrays;
+    }
+    $fields = empty($fields) ? 'order_account_id' : $fields;
+    while($rows = $resultStr->fetch_assoc()){
+        $condArrays[$rows[$fields]]['attr'] = $rows;
+        if(!is_null($rows['product_id'])){
+            $condArrays[$rows[$fields]]['child'][] = empty($rows['product_id']) ? '' : $rows;
+        }
+    }
+
+
+    
+    return $condArrays;
+
+}
 
 function deCodeMD5($str)
 {

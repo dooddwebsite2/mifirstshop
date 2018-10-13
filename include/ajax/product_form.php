@@ -208,7 +208,53 @@ if($action == 'save_to_cart_order_3'){
     $_SESSION['cart']['orders_3'] = $payments_method;
 }
 if($action == 'save_to_cart_order_4'){
-    $_SESSION['cart']['orders_4'] = $review_method;
+   
+    
+    $order_purchase_number = "1X".substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, rand(5,10))."-001".rand(1000000000,9999999999);
+    $date_now = date("Y-m-d H:i:s");
+    $quert_insert_orders = " INSERT INTO orders(order_account_id,order_create_date,order_date
+    ,order_modifiled_date,order_status,order_purchase_number,order_payment_method
+    ,order_shipping_method,order_customer_firstname_info,order_customer_lastname_info
+    ,order_customer_company_info,order_customer_position_info,order_customer_address_info
+    ,order_customer_phone_info,order_customer_fax_info,order_customer_email_info
+    ,order_tax
+    ,order_shipping_rate
+    ,order_sum_orders,
+    order_sum_all)  
+    VALUES ('{$session_id}'
+    , '{$date_now}'
+    ,'{$date_now}'
+    ,'{$date_now}'
+    ,0
+    ,'{$order_purchase_number}'
+    ,'{$_SESSION['cart']['orders_2']}'
+    ,'{$_SESSION['cart']['orders_3']}'
+    ,'{$_SESSION['cart']['orders_1']['firstname']}'
+    ,'{$_SESSION['cart']['orders_1']['lastname']}'
+    ,'{$_SESSION['cart']['orders_1']['company']}'
+    ,'{$_SESSION['cart']['orders_1']['position']}'
+    ,'{$_SESSION['cart']['orders_1']['address']}'
+    ,'{$_SESSION['cart']['orders_1']['phone']}'
+    ,'{$_SESSION['cart']['orders_1']['fax']}'
+    ,'{$_SESSION['cart']['orders_1']['email']}'
+    ,'{$_SESSION['cart']['receipt_orders']['tax_orders']}'
+    ,'{$_SESSION['cart']['receipt_orders']['logistic_orders']}'
+    ,'{$_SESSION['cart']['receipt_orders']['sum_orders']}'
+    ,'{$_SESSION['cart']['receipt_orders']['sum_all']}');";
+    executeQuery($quert_insert_orders);
+
+    $_SESSION['cart']['orders_4']['order_purchase_number'] = $order_purchase_number;
+    $get_order_rel_prod =  get_order_rel_table($session_id,'',$order_purchase_number,'','','','','');
+    if(count($Object_SUMS)  > 0 && count($Object_AMOUNT)){
+        foreach($Object_SUMS as $_keys => $_value){
+            $query_insert_order_rel = " INSERT INTO orders_rel_product(order_id,product_id,product_price,product_amount)  
+            VALUES ( '{$get_order_rel_prod[$session_id]['attr']['order_id']}','{$_keys}','{$_value}','{$Object_AMOUNT[$_keys]}');";
+            executeQuery($query_insert_order_rel);
+        }
+        unset($_SESSION['cart']);
+        echo json_encode(array('order_id'=>$get_order_rel_prod[$session_id]['attr']['order_id']));   
+    }
+    
 }
 if($action == 'delete_to_cart'){
     if(count($_SESSION['cart']['product'] > 0)){

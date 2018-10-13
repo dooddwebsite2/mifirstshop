@@ -46,9 +46,9 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4>ไปรษณีย์พัสดุธรรมดา</h4>
+                                            <h4><?php echo !empty(func_delivery_method('delivery1','header')) ? func_delivery_method('delivery1','header') : '';?></h4>
 
-                                            <p>ไม่จำกัดน้ำหนัก ไม่สามารถตรวจสอบสถานะทางอินเทอร์เน็ตได้ ระยะเวลาในการจัดส่งภาคกลาง 3-5 วัน ระยะเวลาในการจัดส่งภาคอื่น 5-7 วัน</p>
+                                            <p><?php echo !empty(func_delivery_method('delivery1','content')) ? func_delivery_method('delivery1','content') : '';?></p>
 
                                             <div class="box-footer text-center">
 
@@ -59,9 +59,10 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4>ไปรษณีย์พัสดุลงทะเบียน</h4>
+                                            
+                                            <h4><?php echo !empty(func_delivery_method('delivery2','header')) ? func_delivery_method('delivery2','header') : '';?></h4>
 
-                                            <p>น้ำหนักสินค้าไม่เกิน 1.7 กก. ตรวจสอบสถานะทางอินเทอร์เน็ตได้ ระยะเวลาในการจัดส่งภาคกลาง 3-5 วัน ระยะเวลาในการจัดส่งภาคอื่น 5-7 วัน</p>
+                                            <p><?php echo !empty(func_delivery_method('delivery2','content')) ? func_delivery_method('delivery2','content') : '';?></p>
 
                                             <div class="box-footer text-center">
 
@@ -73,9 +74,9 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4>ไปรษณีย์พัสดุ ส่งพิเศษ</h4>
+                                            <h4><?php echo !empty(func_delivery_method('delivery3','header')) ? func_delivery_method('delivery3','header') : '';?></h4>
 
-                                            <p>ไม่จำกัดน้ำหนัก ตรวจสอบสถานะทางอินเทอร์เน็ตได้ ระยะเวลาในการจัดส่งภาคกลาง 1-2 วัน ระยะเวลาในการจัดส่งภาคอื่น 2-3 วัน</p>
+                                            <p><?php echo !empty(func_delivery_method('delivery3','content')) ? func_delivery_method('delivery3','content') : '';?></p>
 
                                             <div class="box-footer text-center">
 

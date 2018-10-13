@@ -46,10 +46,10 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4><b>ธนาคารกรุงเทพ</b></h4>
+                                            <h4><b><?php echo !empty(func_payment_method('bangkok_bank','header')) ? func_payment_method('bangkok_bank','header') : '';?></b></h4>
 
-                                            <h4><b>เลขบัญชี:087-7-31701-6 ชื่อบัญชี:สรัลชนา หนูแสง<br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
-                                           
+                                            <h4><b><?php echo !empty(func_payment_method('bangkok_bank','content')) ? func_payment_method('bangkok_bank','content') : '';?><br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
+
                                             <div class="box-footer text-center">
 
                                                 <input type="radio" name="payments" value="bangkok_bank" <?php echo isset($_SESSION['cart']['orders_3']) && $_SESSION['cart']['orders_3'] == 'bangkok_bank' ? 'checked' : ''; ?> >
@@ -59,10 +59,10 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4><b>ธนาคารกรุงไทย</b></h4>
+                                               <h4><b><?php echo !empty(func_payment_method('krugthai_bank','header')) ? func_payment_method('krugthai_bank','header') : '';?></b></h4>
 
-                                           <h4><b>เลขบัญชี:762-0-47541-9 ชื่อบัญชี:สรัลชนา หนูแสง<br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
-                                           
+                                                <h4><b><?php echo !empty(func_payment_method('krugthai_bank','content')) ? func_payment_method('krugthai_bank','content') : '';?><br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
+
                                             <div class="box-footer text-center">
 
                                                 <input type="radio" name="payments" value="krugthai_bank" <?php echo isset($_SESSION['cart']['orders_3']) && $_SESSION['cart']['orders_3'] == 'krugthai_bank' ? 'checked' : ''; ?>>
@@ -73,9 +73,9 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4><b>ธนาคารกสิกรไทย</b></h4>
+                                            <h4><b><?php echo !empty(func_payment_method('kbank_bank','header')) ? func_payment_method('kbank_bank','header') : '';?></b></h4>
 
-                                            <h4><b>เลขบัญชี:015-2-60228-6 ชื่อบัญชี:สรัลชนา หนูแสง<br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
+                                            <h4><b><?php echo !empty(func_payment_method('kbank_bank','content')) ? func_payment_method('kbank_bank','content') : '';?><br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
                                            
                                             <div class="box-footer text-center">
 
@@ -86,9 +86,9 @@
                                     <div class="col-sm-6">
                                         <div class="box shipping-method">
 
-                                            <h4><b>ธนาคารไทยพาณิชย์</b></h4>
+                                            <h4><b><?php echo !empty(func_payment_method('scb_bank','header')) ? func_payment_method('scb_bank','header') : '';?></b></h4>
 
-                                            <h4><b>เลขบัญชี:052-421403-4 ชื่อบัญชี:สรัลชนา หนูแสง<br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
+                                            <h4><b><?php echo !empty(func_payment_method('scb_bank','content')) ? func_payment_method('scb_bank','content') : '';?><br>** โอนแล้วแจ้งสลิป ชื่อที่อยู่ด้วยนะ</b></h4>
                                            
                                             <div class="box-footer text-center">
 

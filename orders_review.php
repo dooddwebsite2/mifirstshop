@@ -93,36 +93,46 @@
 
 </div>
 <!-- /#all -->
-
+<?php
+    // echo '<PRE>';
+    // print_r($_SESSION);
+?>
 </body>
 <script src="js/product/orders_summary.js"></script>
-
-
+<?php 
+ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
+ $user_id = deCodeMD5_ONETABLE($user_id,'id','auth_account');
+ 
+ ?>
 
 <script>
+
 // token 
 // EAADmEOzptvIBAEwHxpGqnnuUpx1DcP7uGqcQ5eMChyAv3ZAlEaXwSccd3vPCEFKTwoP5QqxTSAH7IZCvGOSk2ZAKaKcZCbyEmTTvWd3vGCbry3iuanZAjxc1KWHmZBguXRAZB74dHadZCWgcvUrxuZCqIwZCaRoA49hqbb0eDXesjxT3pkZAPd164tF
 
-
+var session_id = '<?php echo empty($user_id) ? 0 : $user_id;?>';
 var Object_SUMS = {};
 var Object_AMOUNT = {};
-
 $( document ).ready(function() {
     on_load_set_default_value();
 });
 function save_draft_review(){
-   var review_method = true;
-    $('#loadingDiv').show();
-        var url = './include/ajax/product_form.php';    
-            $.ajax({
-            type: "POST",
-            url: url,
-            data: {review_method:review_method,action:"save_to_cart_order_4"},
-            success: function(data,status,xhr){
-                $('#loadingDiv').hide();
-                window.location.href = "orders_review.php";
-            }
-    });
+    if(session_id > 0){
+        var review_method = true;
+        $('#loadingDiv').show();
+            var url = './include/ajax/product_form.php';    
+                $.ajax({
+                type: "POST",
+                url: url,
+                data: {session_id:session_id,Object_SUMS:Object_SUMS,Object_AMOUNT:Object_AMOUNT,review_method:review_method,action:"save_to_cart_order_4"},
+                success: function(data,status,xhr){
+                    $('#loadingDiv').hide();
+                    var xhr_response = JSON.parse(xhr.responseText);
+                    var order_id = xhr_response ? xhr_response['order_id'] : 0;
+                    window.location.href = "orders_success.php?order_id=" + order_id;
+                }
+        });
+    }
 }
 </script>
 </html>
